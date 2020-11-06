@@ -5,8 +5,10 @@ from puntoVenta import views
 urlpatterns = [
 
     path('login',views.login, name="login"),
-    path('clientes',views.userClientes, name="Clientes"),
-    path('productos',views.userProductos, name="Productos"),
-    path('compras',views.userCompras, name="Compras"),
-    path('ventas',views.userVentas, name="Ventas"),
+    path('IngresarComo/',views.IngresarComo, name='IngresarComo'),
+    path('clientes',views.userClientes, name="clientes"),
+    path('productos',views.userProductos, name="productos"),
+    path('compras',views.userCompras, name="compras"),
+    path('ventas',views.userVentas, name="ventas"),
+    path('adminPrincipalProductos',views.adminPrincipalProductos, name="adminPrincipalProductos"),
 ]
