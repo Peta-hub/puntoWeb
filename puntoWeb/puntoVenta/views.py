@@ -1,32 +1,32 @@
-from django.shortcuts import render, HttpResponse
-from puntoVenta.models import Usuarios
+from django.contrib.auth import authenticate
+from django.shortcuts import render, HttpResponse, redirect
+from puntoVenta.forms import FormularioLogin
+from django.contrib.auth import authenticate, login as do_login
 
 # Create your views here.
 
+
+
 def login(request):
-
-    return render(request, "puntoVentaTemplates/login.html")
-
-def IngresarComo(request):
-
-    user = request.GET["usuario"]
-    password = request.GET["contraseña"]
-
-    Vecusers = Usuarios.objects.filter( usuario__icontains=user)  # icontains es select * from SepoApp_usuarios where usuario=user
-
-    for usuarios in Vecusers:
-        Usuario = usuarios.usuario
-        pclave = usuarios.contraseña
-
-        if Usuario == user and password == pclave:
-
-            if password == 'lamont':
-                return render(request, "puntoVentaTemplates/userClientes.html")
-            if password == 'emmm66':
-                return render(request, "puntoVentaTemplates/adminPrincipalProductos.html")
-
+    if request.method == 'POST':
+        nomuser = request.POST.get("username")
+        conuser = request.POST.get("password")
+        user = authenticate(request, username=nomuser, password=conuser)
+        if user is not None:
+            if user.is_superuser:
+                try:
+                    do_login(request, user)
+                    return redirect('admin')
+                except Exception:
+                    return render(request, 'puntoVentaTemplates/login.html',{"form": FormularioLogin, "errores": "Error al iniciar sesión"})
+            else:
+                return redirect('clientes')
         else:
-            return render(request, "puntoVentaTemplates/login.html")
+            print("el usuario cayo aqui")
+            return render(request, 'puntoVentaTemplates/login.html',{"form": FormularioLogin, "errores": "Usuario y/o contraseña inválidos."})
+    elif request.method == "GET":
+        return render(request, "puntoVentaTemplates/login.html", {"form": FormularioLogin})
+
 
 
 

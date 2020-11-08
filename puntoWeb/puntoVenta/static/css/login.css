@@ -1,0 +1,23 @@
+body { background-color: #D9FEFF; }
+
+table{
+text-align: center;
+background-color:#808080;
+width: 25%;
+margin: auto;
+
+}
+td{
+ padding: 15px;
+
+}
+
+header{
+text-align: center;
+}
+
+img{
+display:block;
+margin:auto;
+width: 1100px; height: 100px;
+}

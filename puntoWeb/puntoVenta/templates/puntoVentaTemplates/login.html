@@ -9,34 +9,9 @@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.1/css/all.css" integrity="sha384-vp86vTRFVJgpjF9jiIGPEEqYqlDwgyBgEF109VFjmqGmIY/Y4HV4d3Gp2irVfcrp" crossorigin="anonymous">
     <!--CUSTOM CSS-->
     <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="{% static 'css/login.css' %}">
 </head>
 
- <style>
-     body { background-color: #D9FEFF; }
-
-     table{
-text-align: center;
-background-color:#808080;
-width: 25%;
-margin: auto;
-
-}
-td{
- padding: 15px;
-
-}
-
-header{
-text-align: center;
-}
-
-img{
-display:block;
-margin:auto;
-width: 1100px; height: 100px;
-}
-
- </style>
 
 <body>
 
@@ -49,29 +24,37 @@ width: 1100px; height: 100px;
 <section>
 
 
-<form  action="/IngresarComo/"  method="GET">
-
+<form  action="{% url 'login' %}"  method="POST">
+ {% csrf_token %}
 <table><tr><td>
 <i class="fas fa-user fa-3x input-group-text" style="color:#EB8110;"></i></td><td>  <!--mb-3 se ocupa para q haya una separacion entre los elementos-->
-    <input name="usuario" class="form-control" placeholder="Username" id="usuario" required>  <!--placeholder poner texto transparente dentro de un cuadro-->
+    {{ form.username }} <!--placeholder poner texto transparente dentro de un cuadro-->
 </td></tr>
 
 
 
 <tr><td>
     <i class="fas fa-lock fa-3x input-group-text" style="color:#EB8110;"></i></td><td>  <!--mb-3 se ocupa para q haya una separacion entre los elementos-->
-    <input name="contraseña" maxlength="20" class="form-control" placeholder="Password" id="contraseña" required>  <!--placeholder poner texto transparente dentro de un cuadro-->
+    {{ form.password }}  <!--placeholder poner texto transparente dentro de un cuadro-->
 </td></tr>
  <tr><td>
 
      </td><td>
-<button type="submit" class="btn btn-success btn-lg" >
+<button type="submit" class="btn btn-success btn-lg">
     <i class="fas fa-sign-in-alt " style="color:#3043AD";></i> Confirmar
 </button>
 
 </table>
-
+<div class="form-group">
+        {% if errores %}
+            <h4 align="center" style="color: red"> {{ errores }} </h4>
+        {% else %}
+           <div id="form_error" class="col-sm-offset-1 col-sm-5"></div>
+        {% endif %}
+    </div>
+</div>
 </form>
+
 
 </section>
 

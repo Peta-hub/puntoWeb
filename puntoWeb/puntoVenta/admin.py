@@ -1,6 +1,6 @@
 from django.contrib import admin
-from puntoVenta.models import Usuarios
+from puntoVenta.models import Recuperar
 
 # Register your models here.
 
-admin.site.register(Usuarios)
+admin.site.register(Recuperar)
