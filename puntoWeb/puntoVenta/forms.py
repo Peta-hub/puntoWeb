@@ -1,4 +1,6 @@
+from django import forms
 from django.contrib.auth.forms import AuthenticationForm
+from puntoVenta.models import Clientes
 
 
 class FormularioLogin(AuthenticationForm):
@@ -8,3 +10,48 @@ class FormularioLogin(AuthenticationForm):
         self.fields['username'].widget.attrs['placeholder'] = 'Nombre del administrador global'
         self.fields['password'].widget.attrs['class'] = 'form-control'
         self.fields['password'].widget.attrs['placeholder'] = 'Contraseña'
+
+
+class ClienteForm(forms.ModelForm):
+    class Meta:
+        model = Clientes
+        fields = ('id', 'nombre', 'apellidos', 'direccion', 'telefono')
+        label = {
+            'id': 'id',
+            'nombre': 'Nombre',
+            'apellidos': 'Apellidos',
+            'direccion': 'Direccion',
+            'telefono': 'Telefono',
+        }
+        widgets = {
+            'id': forms.TextInput(
+                attrs={
+                    'class': 'form-control',
+                    'id': 'identificador'
+                }
+            ),
+            'nombre': forms.TextInput(
+                attrs={
+                    'class': 'form-control',
+                    'id': 'nombre'
+                }
+            ),
+            'apellidos': forms.TextInput(
+                attrs={
+                    'class': 'form-control',
+                    'id': 'apellidos'
+                }
+            ),
+            'direccion': forms.TextInput(
+                attrs={
+                    'class': 'form-control',
+                    'id': 'direccion'
+                }
+            ),
+            'telefono': forms.TextInput(
+                attrs={
+                    'class': 'form-control',
+                    'id': 'telefono'
+                }
+            ),
+        }

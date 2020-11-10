@@ -1,7 +1,10 @@
 from django.contrib.auth import authenticate
 from django.shortcuts import render, HttpResponse, redirect
+from django.urls import reverse_lazy
+from django.views.generic import ListView, UpdateView, CreateView, DeleteView
 from puntoVenta.forms import FormularioLogin
 from django.contrib.auth import authenticate, login as do_login
+
 
 # Create your views here.
 
@@ -50,3 +53,8 @@ def userVentas(request):
 
 def adminPrincipalProductos(request):
     return render(request, "puntoVentaTemplates/adminPrincipalProductos.html")
+
+
+
+
+
