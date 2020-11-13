@@ -27,31 +27,41 @@ class ClienteForm(forms.ModelForm):
             'id': forms.TextInput(
                 attrs={
                     'class': 'form-control',
-                    'id': 'identificador'
+                    'id': 'identificador',
+                    'style': 'background-color: #FEFCAE',
+                    'size': '10'
                 }
             ),
             'nombre': forms.TextInput(
                 attrs={
                     'class': 'form-control',
-                    'id': 'nombre'
+                    'id': 'nombre',
+                    'style': 'background-color: #FEFCAE',
+                    'size': '25'
                 }
             ),
             'apellidos': forms.TextInput(
                 attrs={
                     'class': 'form-control',
-                    'id': 'apellidos'
+                    'id': 'apellidos',
+                    'style': 'background-color: #FEFCAE',
+                    'size': '30'
                 }
             ),
             'direccion': forms.TextInput(
                 attrs={
                     'class': 'form-control',
-                    'id': 'direccion'
+                    'id': 'direccion',
+                    'style': 'background-color: #FEFCAE',
+                    'size': '30'
                 }
             ),
             'telefono': forms.TextInput(
                 attrs={
                     'class': 'form-control',
-                    'id': 'telefono'
+                    'id': 'telefono',
+                    'style': 'background-color: #FEFCAE',
+                    'size': '15'
                 }
             ),
         }

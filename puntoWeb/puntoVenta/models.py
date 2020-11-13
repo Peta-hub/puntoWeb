@@ -8,8 +8,8 @@ class Recuperar(models.Model):
 
 
 class Clientes(models.Model):
-    id = models.CharField("Identificador", primary_key=True, max_length=4, blank=False, null=False, default=0)
-    nombre = models.CharField("Nombre cliente", max_length=16, blank=False, null=False, default=0)
-    apellidos = models.CharField("Apellidos cliente", max_length=16, blank=False, null=False, default=0)
-    direccion = models.CharField("Direccion cliente", max_length=16, blank=False, null=False, default=0)
-    telefono = models.CharField("Telefono cliente", max_length=16, blank=False, null=False, default=0)
+    id = models.CharField("Identificador", primary_key=True, max_length=4, blank=True, null=False, default="")
+    nombre = models.CharField("Nombre cliente", max_length=16, blank=True, null=False, default="")
+    apellidos = models.CharField("Apellidos cliente", max_length=16, blank=True, null=False, default="")
+    direccion = models.CharField("Direccion cliente", max_length=16, blank=True, null=False, default="")
+    telefono = models.CharField("Telefono cliente", max_length=16, blank=True, null=False, default="")

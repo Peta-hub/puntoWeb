@@ -3,6 +3,7 @@ from django.shortcuts import render, HttpResponse, redirect
 from django.urls import reverse_lazy
 from django.views.generic import ListView, UpdateView, CreateView, DeleteView
 from puntoVenta.forms import FormularioLogin
+from puntoVenta.forms import ClienteForm
 from django.contrib.auth import authenticate, login as do_login
 
 
@@ -35,7 +36,7 @@ def login(request):
 
 def userClientes(request):
 
-    return render(request, "puntoVentaTemplates/userClientes.html")
+    return render(request, "puntoVentaTemplates/userClientes.html", {"form": ClienteForm})
 
 
 def userProductos(request):
