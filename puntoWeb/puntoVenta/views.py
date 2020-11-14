@@ -1,4 +1,5 @@
 from django.contrib.auth import authenticate
+from django.contrib.auth.models import User
 from django.shortcuts import render, HttpResponse, redirect
 from django.urls import reverse_lazy
 from django.views.generic import ListView, UpdateView, CreateView, DeleteView
@@ -8,7 +9,7 @@ from django.contrib.auth import authenticate, login as do_login
 
 
 # Create your views here.
-
+from puntoVenta.models import Clientes
 
 
 def login(request):
@@ -34,9 +35,9 @@ def login(request):
 
 
 
-def userClientes(request):
-
-    return render(request, "puntoVentaTemplates/userClientes.html", {"form": ClienteForm})
+# def userClientes(request):
+#
+#     return render(request, "puntoVentaTemplates/userClientes.html", {"form": ClienteForm})
 
 
 def userProductos(request):
@@ -56,6 +57,14 @@ def adminPrincipalProductos(request):
     return render(request, "puntoVentaTemplates/adminPrincipalProductos.html")
 
 
-
-
-
+def userClientes(request):
+    if request.method == "POST":
+        cliente_form = ClienteForm(request.POST)
+        print(request.POST)
+        if cliente_form.is_valid():
+            cliente_form.save()
+        return redirect("clientes")
+    else: # si es get
+        cliente_form = ClienteForm()
+        clientes = Clientes.objects.all()
+    return render(request, "puntoVentaTemplates/userClientes.html", {"form": cliente_form, "clientes":clientes})
