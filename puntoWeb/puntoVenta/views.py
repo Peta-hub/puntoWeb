@@ -1,5 +1,6 @@
 from django.contrib.auth import authenticate
 from django.contrib.auth.models import User
+from django.core.exceptions import ObjectDoesNotExist
 from django.shortcuts import render, HttpResponse, redirect
 from django.urls import reverse_lazy
 from django.views.generic import ListView, UpdateView, CreateView, DeleteView
@@ -34,12 +35,6 @@ def login(request):
 
 
 
-
-# def userClientes(request):
-#
-#     return render(request, "puntoVentaTemplates/userClientes.html", {"form": ClienteForm})
-
-
 def userProductos(request):
     return render(request, "puntoVentaTemplates/userProductos.html")
 
@@ -68,3 +63,26 @@ def userClientes(request):
         cliente_form = ClienteForm()
         clientes = Clientes.objects.all()
     return render(request, "puntoVentaTemplates/userClientes.html", {"form": cliente_form, "clientes":clientes})
+
+
+def eliminar_cliente(request,pk):  # se eliminara un objeto de la bd ESTA FUNCION NO DEVUELVE NINGUNA PAGINA SOLO ELIMINA AL AUTOR Y REDIRIJE A LA PAGINA QUE LOS LISTA PARA QUE YA NO APAREZCA
+    cliente = Clientes.objects.get(id=pk)
+    cliente.delete()
+    return redirect("clientes")
+
+
+def editarCliente(request,pk=""):  # se editara un autor desde una url, esta funcion recibe el id de un autor para editarlo
+    cliente_form = None
+    error = None
+    try:
+        cliente = Clientes.objects.get(id=pk)  # SON LAS MISMAS CONSULTAS QUE HACEMOS EN SHELL
+        if request.method == "GET":
+            cliente_form = ClienteForm(instance=cliente)  # creamos un formulario y lo renderizamos , decimos que la instancia que utilizara es el Autor que busco el usuario por eso se pone la variable de arriba
+        else:
+            cliente_form = ClienteForm(request.POST,instance=cliente)
+            if cliente_form.is_valid():
+                cliente_form.save()
+            return redirect("clientes")
+    except ObjectDoesNotExist as e:
+        error = e
+    return render(request, 'puntoVentaTemplates/actualizar_userClientes.html', {'form': cliente_form,'error': error, "iduser":pk})

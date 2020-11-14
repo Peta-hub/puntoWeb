@@ -40,7 +40,7 @@
 
 
       <!--Segundas filas-->
-       <form method="POST" action="{% url 'clientes' %}">
+       <form method="POST" action="{% url 'actualizar_cliente' iduser %}">
            {% csrf_token %}
       <div class="row">
         <div class="col-md-1" style="border: 1px solid #000; background-color: gray; height: 90px;"><i class="fa fa-box fa-5x" style="color:#1D43CF;"></i></div>
@@ -65,11 +65,9 @@
       <div class="row">
         <div class="col-md-1" style="border: 1px solid #000; background-color: gray; height: 90px;" ><i class="fa fa-hand-holding-usd fa-5x" style="color:#E55DE1;"></i></div>
         <div class="col-md-1" style="border: 1px solid #000; background-color: gray; height: 90px;" ><br><h4 align="left" style="color:cornsilk">Compras</h4></div>
-        <div class="col-md-2" style="border: 1px solid #000; background-color: white;"><button type="submit" class="btn btn-success btn-lg btn-block">Crear</button></div>
-        </form>
-        <div class="col-md-2" style="border: 1px solid #000; background-color: white;"><button type="button" class="btn btn-warning btn-lg btn-block">Buscar</button></div>
-        <div class="col-md-2" style="border: 1px solid #000; background-color: white;"><button type="button" class="btn btn-primary btn-lg btn-block">Actualizar</button></div>
-        <div class="col-md-2" style="border: 1px solid #000; background-color: white;"><button type="button" class="btn btn-danger btn-lg btn-block">Borrar</button></div>
+        <div class="col-md-2" style="border: 1px solid #000; background-color: white;"><button type="submit" class="btn btn-primary btn-lg btn-block">Confirmar</button></div>
+          <div class="col-md-2" style="border: 1px solid #000; background-color: white;"><a href="{% url 'clientes' %}" class="btn btn-danger btn-lg btn-block">Cancelar</a></div>
+          </form>
         <div class="col-md-2" style="border: 1px solid #000; background-color: white;"></div>
       </div>
 
@@ -85,44 +83,6 @@
 
       <!-- Ultima fila  -->
 
-      <div class="row">
-        <div class="col-md-2" style="border: 1px solid #000; background-color: gray; height: 300px;" ></div>
-        <div class="col-md-10" style="border: 1px solid #000; background-color: white;">
-            {% if clientes  %}
-                <table class="table">
-                    <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Nombre</th>
-                        <th>Apellidos</th>
-                        <th>Direccion</th>
-                        <th>Telefono</th>
-                    </tr>
-                </thead>
-                <tbody>
-                {% for cliente in clientes %}
-                <tr>
-                    <td>{{ cliente.id }}</td>
-                    <td>{{ cliente.nombre }}</td>
-                    <td>{{ cliente.apellidos }}</td>
-                    <td>{{ cliente.direccion }}</td>
-                    <td>{{ cliente.telefono }}</td>
-                <td>
-                <a href="{% url 'actualizar_cliente' cliente.id %}" class="btn btn-primary">Editar</a>
-                <a href="{% url 'eliminar_cliente' cliente.id %}" class="btn btn-danger">Eliminar</a>
-                </td>
-            </tr>
-            {% endfor %}
-            </tbody>
-        </table>
-        {% else%}
-            <h1>Aun no hay clientes registrados</h1>
-            <h1>Porfavor registre uno.</h1>
-        {% endif %}
-            </div>
-      </div>
-
-   </div>
 
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
