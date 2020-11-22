@@ -13,3 +13,9 @@ class Clientes(models.Model):
     apellidos = models.CharField("Apellidos cliente", max_length=16, blank=True, null=False, default="")
     direccion = models.CharField("Direccion cliente", max_length=16, blank=True, null=False, default="")
     telefono = models.CharField("Telefono cliente", max_length=16, blank=True, null=False, default="")
+
+class Productos(models.Model):
+    codigo = models.CharField("Identificador", primary_key=True, max_length=4, blank=True, null=False, default="")
+    nombre = models.CharField("Nombre producto", max_length=20, blank=True, null=False, default="")
+    categoria = models.CharField("Categoria", max_length=20, blank=True, null=False, default="")
+    precio = models.IntegerField("Precio sugerido", blank=True, null=False, default="")

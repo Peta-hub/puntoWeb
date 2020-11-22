@@ -5,12 +5,12 @@ from django.shortcuts import render, HttpResponse, redirect
 from django.urls import reverse_lazy
 from django.views.generic import ListView, UpdateView, CreateView, DeleteView
 from puntoVenta.forms import FormularioLogin
-from puntoVenta.forms import ClienteForm
+from puntoVenta.forms import ClienteForm, ProductoForm
 from django.contrib.auth import authenticate, login as do_login
 
 
 # Create your views here.
-from puntoVenta.models import Clientes
+from puntoVenta.models import Clientes, Productos
 
 
 def login(request):
@@ -22,7 +22,7 @@ def login(request):
             if user.is_superuser:
                 try:
                     do_login(request, user)
-                    return redirect('admin')
+                    return redirect('adminMain')
                 except Exception:
                     return render(request, 'puntoVentaTemplates/login.html',{"form": FormularioLogin, "errores": "Error al iniciar sesión"})
             else:
@@ -35,22 +35,55 @@ def login(request):
 
 
 
-def userProductos(request):
-    return render(request, "puntoVentaTemplates/userProductos.html")
-
-
-def userCompras(request):
-    return render(request, "puntoVentaTemplates/userCompras.html")
-
-
-def userVentas(request):
-    return render(request, "puntoVentaTemplates/userVentas.html")
-
-
 
 def adminPrincipalProductos(request):
-    return render(request, "puntoVentaTemplates/adminPrincipalProductos.html")
+    if request.method == "POST":
+        producto_form = ProductoForm(request.POST)
+        print(request.POST)
+        if producto_form.is_valid():
+            producto_form.save()
+        return redirect("adminMain")
+    else:  # si es get, es decir cuando solo se entra a la pagina
+        producto_form = ProductoForm()
+        productos = Productos.objects.all()
+    return render(request, "puntoVentaTemplates/adminPrincipalProductos.html", {"form": producto_form, "productos": productos})
 
+def eliminar_producto(request,pk=""):  # se eliminara un objeto de la bd ESTA FUNCION NO DEVUELVE NINGUNA PAGINA SOLO ELIMINA AL AUTOR Y REDIRIJE A LA PAGINA QUE LOS LISTA PARA QUE YA NO APAREZCA
+    producto = Productos.objects.get(codigo=pk)
+    producto.delete()
+    return redirect("adminMain")
+
+def editarProducto(request,pk=""):  # se editara un cliente desde una url, esta funcion recibe el id de un cliente para editarlo
+    producto_form = None
+    error = None
+    try:
+        producto = Productos.objects.get(codigo=pk)  # SON LAS MISMAS CONSULTAS QUE HACEMOS EN SHELL
+        if request.method == "GET":
+            producto_form = ProductoForm(instance=producto)  # creamos un formulario y lo renderizamos , decimos que la instancia que utilizara es el Autor que busco el usuario por eso se pone la variable de arriba
+        else:
+            producto_form = ProductoForm(request.POST,instance=producto)
+            if producto_form.is_valid():
+                producto_form.save()
+            return redirect("adminMain")
+    except ObjectDoesNotExist as e:
+        error = e
+    return render(request, 'puntoVentaTemplates/actualizar_adminPrincipal.html', {'form': producto_form,'error': error, "codigo":pk})
+
+
+
+
+
+
+
+def adminDetallesProducto(request):
+    return render(request, "puntoVentaTemplates/adminDetallesProducto.html")
+
+def adminMateriales(request):
+    return render(request, "puntoVentaTemplates/adminMateriales.html")
+
+
+
+#---------------------------- USUARIOS --------------------------------------#
 
 def userClientes(request):
     if request.method == "POST":
@@ -59,19 +92,19 @@ def userClientes(request):
         if cliente_form.is_valid():
             cliente_form.save()
         return redirect("clientes")
-    else: # si es get
+    else: # si es get, es decir cuando solo se entra a la pagina
         cliente_form = ClienteForm()
         clientes = Clientes.objects.all()
     return render(request, "puntoVentaTemplates/userClientes.html", {"form": cliente_form, "clientes":clientes})
 
 
-def eliminar_cliente(request,pk):  # se eliminara un objeto de la bd ESTA FUNCION NO DEVUELVE NINGUNA PAGINA SOLO ELIMINA AL AUTOR Y REDIRIJE A LA PAGINA QUE LOS LISTA PARA QUE YA NO APAREZCA
+def eliminar_cliente(request,pk=""):  # se eliminara un objeto de la bd ESTA FUNCION NO DEVUELVE NINGUNA PAGINA SOLO ELIMINA AL AUTOR Y REDIRIJE A LA PAGINA QUE LOS LISTA PARA QUE YA NO APAREZCA
     cliente = Clientes.objects.get(id=pk)
     cliente.delete()
     return redirect("clientes")
 
 
-def editarCliente(request,pk=""):  # se editara un autor desde una url, esta funcion recibe el id de un autor para editarlo
+def editarCliente(request,pk=""):  # se editara un cliente desde una url, esta funcion recibe el id de un cliente para editarlo
     cliente_form = None
     error = None
     try:
@@ -86,3 +119,17 @@ def editarCliente(request,pk=""):  # se editara un autor desde una url, esta fun
     except ObjectDoesNotExist as e:
         error = e
     return render(request, 'puntoVentaTemplates/actualizar_userClientes.html', {'form': cliente_form,'error': error, "iduser":pk})
+
+
+
+
+def userProductos(request):
+    return render(request, "puntoVentaTemplates/userProductos.html")
+
+
+def userCompras(request):
+    return render(request, "puntoVentaTemplates/userCompras.html")
+
+
+def userVentas(request):
+    return render(request, "puntoVentaTemplates/userVentas.html")

@@ -1,6 +1,6 @@
 from django import forms
 from django.contrib.auth.forms import AuthenticationForm
-from puntoVenta.models import Clientes
+from puntoVenta.models import Clientes, Productos
 
 
 class FormularioLogin(AuthenticationForm):
@@ -62,6 +62,54 @@ class ClienteForm(forms.ModelForm):
                     'id': 'telefono',
                     'style': 'background-color: #FEFCAE',
                     'size': '15'
+                }
+            ),
+        }
+
+
+
+
+class ProductoForm(forms.ModelForm):
+    class Meta:
+        model = Productos
+        fields = ('codigo', 'nombre', 'categoria', 'precio')
+        label = {
+            'codigo': 'Codigo',
+            'nombre': 'Nombre',
+            'categoria': 'Categoria',
+            'precio': 'Precio',
+        }
+        widgets = {
+            'codigo': forms.TextInput(
+                attrs={
+                    'class': 'form-control',
+                    'id': 'identificador',
+                    'style': 'background-color: #FEFCAE',
+                    'size': '10'
+                }
+            ),
+            'nombre': forms.TextInput(
+                attrs={
+                    'class': 'form-control',
+                    'id': 'nombre',
+                    'style': 'background-color: #FEFCAE',
+                    'size': '25'
+                }
+            ),
+            'categoria': forms.TextInput(
+                attrs={
+                    'class': 'form-control',
+                    'id': 'categoria',
+                    'style': 'background-color: #FEFCAE',
+                    'size': '30'
+                }
+            ),
+            'precio': forms.TextInput(
+                attrs={
+                    'class': 'form-control',
+                    'id': 'direccion',
+                    'style': 'background-color: #FEFCAE',
+                    'size': '20'
                 }
             ),
         }

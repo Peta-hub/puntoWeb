@@ -1,0 +1,90 @@
+  .boton_2{
+    padding: 25px;
+    text-transform: uppercase;
+    padding-left: 23px;
+    padding-right: 23px;
+    font-weight: 500;
+    font-size: 18px;
+    background-color: #EEE81B;
+  }
+  .boton_2{   /*Para poner en la parde de abajo*/
+    position:absolute;
+    bottom:4px;
+    right:15px;
+      color: black;
+      font-family: arial;
+}
+  .boton_2:hover{
+    color: #9b0e0e;
+    background-color: #bc6355;
+    text-decoration: none;
+  }
+
+
+  .btn_detalles{
+       padding: 28px;
+    text-transform: uppercase;
+    padding-left: 12px;
+    padding-right: 12px;
+    font-weight: 500;
+    font-size: 12px;
+    background-color: #FB972C;
+  }
+  .btn_detalles{
+      position:absolute;
+      bottom:4px;
+      right:15px;
+      color: black;
+      font-family: arial;
+  }
+  .btn_detalles:hover{
+    color: #9b0e0e;
+    background-color: #bc6355;
+    text-decoration: none;
+  }
+
+
+    .boton_material{
+    padding: 25px;
+    text-transform: uppercase;
+    padding-left: 25px;
+    padding-right: 25px;
+    font-weight: 500;
+    font-size: 18px;
+    background-color: #4FD21F;
+  }
+  .boton_material{   /*Para poner en la parde de abajo*/
+    position:absolute;
+    bottom:4px;
+    right:15px;
+      color: black;
+      font-family: arial;
+}
+  .boton_material:hover{
+    color: #9b0e0e;
+    background-color: #bc6355;
+    text-decoration: none;
+  }
+
+
+     .boton_usuario{
+    padding: 25px;
+    text-transform: uppercase;
+    padding-left: 30px;
+    padding-right: 30px;
+    font-weight: 500;
+    font-size: 18px;
+    background-color: #1E41E3;
+  }
+  .boton_usuario{   /*Para poner en la parde de abajo*/
+    position:absolute;
+    bottom:4px;
+    right:15px;
+      color: black;
+      font-family: arial;
+}
+  .boton_usuario:hover{
+    color: #9b0e0e;
+    background-color: #bc6355;
+    text-decoration: none;
+  }
