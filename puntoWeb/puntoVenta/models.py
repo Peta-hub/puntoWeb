@@ -26,3 +26,8 @@ class Proveedores(models.Model):
     direccion = models.CharField("Direccion proveedor", max_length=30, blank=True, null=False, default="")
     telefono = models.CharField("Telefono proveedor", max_length=16, blank=True, null=False, default="")
 
+class Materiales(models.Model):
+    id_Material = models.CharField("Identificador", primary_key=True, max_length=4, blank=True, null=False, default="")
+    nombre = models.CharField("Nombre producto", max_length=30, blank=True, null=False, default="")
+    medidas = models.CharField("Telefono proveedor", max_length=16, blank=True, null=False, default="")
+    precio = models.IntegerField("Precio sugerido", blank=True, null=False, default="")

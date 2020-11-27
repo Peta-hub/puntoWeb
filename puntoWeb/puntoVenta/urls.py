@@ -5,6 +5,7 @@ from puntoVenta import views
 urlpatterns = [
 
     path('login/',views.login, name="login"),
+    path('Recuperar/',views.recuperarContraseña, name="recuperar"),
     path('clientes/',views.userClientes, name="clientes"),
     path('productos/',views.userProductos, name="productos"),
     path('compras/',views.userCompras, name="compras"),

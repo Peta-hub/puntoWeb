@@ -5,12 +5,12 @@ from django.shortcuts import render, HttpResponse, redirect
 from django.urls import reverse_lazy
 from django.views.generic import ListView, UpdateView, CreateView, DeleteView
 from puntoVenta.forms import FormularioLogin
-from puntoVenta.forms import ClienteForm, ProductoForm, ProveedorForm
+from puntoVenta.forms import ClienteForm, ProductoForm, ProveedorForm, RecuperarForm
 from django.contrib.auth import authenticate, login as do_login
 
 
 # Create your views here.
-from puntoVenta.models import Clientes, Productos, Proveedores
+from puntoVenta.models import Clientes, Productos, Proveedores, Recuperar
 
 
 def login(request):
@@ -34,6 +34,13 @@ def login(request):
         return render(request, "puntoVentaTemplates/login.html", {"form": FormularioLogin})
 
 
+def recuperarContraseña(request):
+
+    return render(request, "puntoVentaTemplates/recuperarContraseña.html", {"form": FormularioLogin})
+
+def recuperarContraseña2(request):
+
+    return render(request, "puntoVentaTemplates/recuperarContraseña2.html", {"form": RecuperarForm})
 
 
 def adminPrincipalProductos(request):
