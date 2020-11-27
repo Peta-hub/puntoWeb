@@ -5,12 +5,12 @@ from django.shortcuts import render, HttpResponse, redirect
 from django.urls import reverse_lazy
 from django.views.generic import ListView, UpdateView, CreateView, DeleteView
 from puntoVenta.forms import FormularioLogin
-from puntoVenta.forms import ClienteForm, ProductoForm
+from puntoVenta.forms import ClienteForm, ProductoForm, ProveedorForm
 from django.contrib.auth import authenticate, login as do_login
 
 
 # Create your views here.
-from puntoVenta.models import Clientes, Productos
+from puntoVenta.models import Clientes, Productos, Proveedores
 
 
 def login(request):
@@ -81,6 +81,13 @@ def adminDetallesProducto(request):
 def adminMateriales(request):
     return render(request, "puntoVentaTemplates/adminMateriales.html")
 
+def adminUsuarios(request):
+    return render(request, "puntoVentaTemplates/adminUsuarios.html")
+
+
+def adminReportes(request):
+    return render(request, "puntoVentaTemplates/adminReportes.html")
+
 
 
 #---------------------------- USUARIOS --------------------------------------#
@@ -133,3 +140,37 @@ def userCompras(request):
 
 def userVentas(request):
     return render(request, "puntoVentaTemplates/userVentas.html")
+
+
+def userProveedores(request):
+    if request.method == "POST":
+        proveedor_form = ProveedorForm(request.POST)
+        print(request.POST)
+        if proveedor_form.is_valid():
+            proveedor_form.save()
+        return redirect("proveedores")
+    else:  # si es get, es decir cuando solo se entra a la pagina
+        proveedor_form = ProveedorForm()
+        proveedores = Proveedores.objects.all()
+    return render(request, "puntoVentaTemplates/userProveedores.html", {"form": proveedor_form, "proveedores": proveedores})
+
+def eliminar_proveedor(request,pk=""):  # se eliminara un objeto de la bd ESTA FUNCION NO DEVUELVE NINGUNA PAGINA SOLO ELIMINA AL AUTOR Y REDIRIJE A LA PAGINA QUE LOS LISTA PARA QUE YA NO APAREZCA
+    proveedor = Proveedores.objects.get(id_Proveedor=pk)
+    proveedor.delete()
+    return redirect("proveedores")
+
+def editarProveedor(request,pk=""):  # se editara un cliente desde una url, esta funcion recibe el id de un cliente para editarlo
+    proveedor_form = None
+    error = None
+    try:
+        proveedor = Proveedores.objects.get(id_Proveedor=pk)  # SON LAS MISMAS CONSULTAS QUE HACEMOS EN SHELL
+        if request.method == "GET":
+            proveedor_form = ProveedorForm(instance=proveedor)  # creamos un formulario y lo renderizamos , decimos que la instancia que utilizara es el Autor que busco el usuario por eso se pone la variable de arriba
+        else:
+            proveedor_form = ProveedorForm(request.POST,instance=proveedor)
+            if proveedor_form.is_valid():
+                proveedor_form.save()
+            return redirect("proveedores")
+    except ObjectDoesNotExist as e:
+        error = e
+    return render(request, 'puntoVentaTemplates/actualizar_userProveedores.html', {'form': proveedor_form,'error': error, "id_Proveedor":pk})

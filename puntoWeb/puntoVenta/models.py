@@ -19,3 +19,10 @@ class Productos(models.Model):
     nombre = models.CharField("Nombre producto", max_length=20, blank=True, null=False, default="")
     categoria = models.CharField("Categoria", max_length=20, blank=True, null=False, default="")
     precio = models.IntegerField("Precio sugerido", blank=True, null=False, default="")
+
+class Proveedores(models.Model):
+    id_Proveedor = models.CharField("Identificador", primary_key=True, max_length=4, blank=True, null=False, default="")
+    nombre = models.CharField("Nombre producto", max_length=25, blank=True, null=False, default="")
+    direccion = models.CharField("Direccion proveedor", max_length=30, blank=True, null=False, default="")
+    telefono = models.CharField("Telefono proveedor", max_length=16, blank=True, null=False, default="")
+

@@ -37,7 +37,7 @@
         <div class="col-md-2" style="background-color: white; border: 1px solid #000;"><a href="{% url 'adminMain' %}" class="boton_2" >Productos</a></div>
         <div class="col-md-2" style="background-color: white; border: 1px solid #000;"><a href="{% url 'adminDetaProducto' %}" class="btn_detalles">Detalles del Producto</a></div>
         <div class="col-md-2" style="background-color: white; border: 1px solid #000;"><a href="{% url 'adminMateriales' %}" class="boton_material" >Materiales</a></div>
-        <div class="col-md-2" style="background-color: white; border: 1px solid #000;"><a href="" class="boton_usuario" >Usuarios</a></div>
+        <div class="col-md-2" style="background-color: white; border: 1px solid #000;"><a href="{% url 'adminUsuarios' %}" class="boton_usuario" >Usuarios</a></div>
         <div class="col-md-1" style="background-color: white; border: 1px solid #000;"><h1></h1></div>
         <div class="col-md-1 text-center" style="background-color: white; border: 1px solid #000;" ><i class="fa fa-address-book fa-2x" style="color:#4FD21F" ></i><h6 class="text-center">Detalles del producto</h6></div>
       </div>
@@ -89,7 +89,7 @@
 
       <div class="row">
         <div class="col-md-2 text-center" style="border: 1px solid #000; background-color: gray; height: 800px;" ><i class="fa fa-address-book fa-6x" style="color:#4FD21F" ></i><h3 class="text-center">Administracion</h3>
-            <i class="far fa-chart-bar fa-6x" style="color:#0FB5B0"></i><h3 class="text-center">Reportes</h3>
+            <i class="far fa-chart-bar fa-6x" style="color:#0FB5B0"></i><a href="{% url 'adminReportes' %}"><h3 class="text-center" style="color: black">Reportes</h3></a>
         </div>
         <div class="col-md-10" style="border: 1px solid #000; background-color: white; height: 800px;">
             {% if clientes  %}
