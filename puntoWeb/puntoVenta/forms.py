@@ -1,5 +1,7 @@
 from django import forms
 from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth.hashers import make_password
+from django.contrib.auth.models import User
 from puntoVenta.models import Clientes, Productos, Proveedores, Recuperar, Materiales
 
 
@@ -10,6 +12,81 @@ class FormularioLogin(AuthenticationForm):
         self.fields['username'].widget.attrs['placeholder'] = 'Nombre de Usuario'
         self.fields['password'].widget.attrs['class'] = 'form-control'
         self.fields['password'].widget.attrs['placeholder'] = 'Contraseña'
+
+
+class UserForm(forms.ModelForm):
+    pwd2 = forms.CharField(label='Contraseña de confirmación', widget=forms.PasswordInput(
+        attrs={
+            'class': 'form-control',
+            'placeholder': 'Ingrese de nuevo la contraseña',
+            'id': 'pwd2',
+            'required': 'required',
+        }
+    ))
+
+    class Meta:
+        model = User
+        fields = ['username', 'password', 'first_name', 'last_name', 'email']
+        labels = {
+            'username': 'Nombre de usuario',
+            'password': 'Contraseña del administrador',
+            'first_name': 'Nombre real del administrador',
+            'last_name': 'Apellidos del administrador',
+            'email': 'Correo del administrador',
+        }
+
+        widgets = {
+            'username': forms.TextInput(
+                attrs={
+                    'class': 'form-control',
+                    'placeholder': 'Ingrese el nombre de usuario',
+                    'id': 'usr'
+                }
+            ),
+            'password': forms.PasswordInput(
+                attrs={
+                    'class': 'form-control',
+                    'placeholder': 'Ingrese la contraseña del administrador',
+                    'id': 'pwd'
+                }
+            ),
+            'first_name': forms.TextInput(
+                attrs={
+                    'class': 'form-control',
+                    'placeholder': 'Ingrese el nombre del administrador',
+                    'id': 'nombres'
+                }
+            ),
+            'last_name': forms.TextInput(
+                attrs={
+                    'class': 'form-control',
+                    'placeholder': 'Ingrese los apellidos del administrador',
+                    'id': 'apellidos'
+                }
+            ),
+            'email': forms.EmailInput(
+                attrs={
+                    'class': 'form-control',
+                    'placeholder': 'Ingrese el correo del administrador',
+                    'id': 'correo'
+                }
+            ),
+        }
+
+    def clean_pwd2(self):  # MML Hacemos la verificacion de si la contraeña coincide
+        pwd1 = self.cleaned_data['password']
+        pwd2 = self.cleaned_data['pwd2']
+        if pwd1 != pwd2:
+            raise forms.ValidationError('Las contraseñas no coinciden')  # Este es el error que esta en forms.error
+        return pwd2
+
+    def save(self, commit=True):
+        user = super().save(commit=False)  # MML se redefine la forma en que se guarda la contraseña
+        pwd_hash = make_password(self.cleaned_data['password'])
+        user.password = pwd_hash
+        if commit:
+            user.save()
+        return user
 
 
 

@@ -22,23 +22,23 @@
         </div>
 	</header>
 
-    <form  action="{% url 'recuperar' %}"  method="POST">
+    <form  action="{% url 'recuperar2' usuario.id %}"  method="POST">
       {% csrf_token %}
     <main class="main">
     	<div class="contenedor">
         <div class="pregunta">
         <p>¿Tienes problemas para ingresar?</p>
-        {{ form.username }}
+        {{ usuario.username }}
          </div>
 
          <div >
          <label class="blanco">Pregunta:</label>
-        <input type="text" class="derecha">
+        {{ pregunta.pregunta_secreta }}
          </div>
 
          <div>
          <label class="blanco">Escribe tu respuesta:</label>
-        <input type="text" class="derecha" name="respuesta" id="respuesta">
+         {{ form.respuesta }}
          </div>
 
          <div class="centro">

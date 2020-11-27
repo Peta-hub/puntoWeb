@@ -12,6 +12,8 @@ from django.contrib.auth import authenticate, login as do_login
 # Create your views here.
 from puntoVenta.models import Clientes, Productos, Proveedores, Recuperar
 
+from puntoVenta.forms import UserForm
+
 
 def login(request):
     if request.method == 'POST':
@@ -35,12 +37,35 @@ def login(request):
 
 
 def recuperarContraseña(request):
-
+    if request.method == 'POST':
+        nomuser = request.POST.get("username")
+        usuario = User.objects.get(username=nomuser)
+        pregunta = Recuperar.objects.get(user=usuario)
+        return render(request, "puntoVentaTemplates/recuperarContraseña2.html",{"pregunta":pregunta,"usuario":usuario,"form":RecuperarForm})
     return render(request, "puntoVentaTemplates/recuperarContraseña.html", {"form": FormularioLogin})
 
-def recuperarContraseña2(request):
-
+def recuperarContraseña2(request, pk=0):
+    if request.method == 'POST':
+        usuario = User.objects.get(id=pk)
+        respuesta = request.POST.get("respuesta")
+        pregunta = Recuperar.objects.get(respuesta=respuesta)
+        if pregunta.user.username == usuario.username:
+            user_form = UserForm(instance=usuario)
+            return render(request,"puntoVentaTemplates/cambiarContraseña.html",{"form":user_form,"usuario":usuario})
     return render(request, "puntoVentaTemplates/recuperarContraseña2.html", {"form": RecuperarForm})
+
+
+def cambiar_contrasena(request, pk=0):
+    usuario = User.objects.get(id=pk)
+    if request.method == 'POST':
+        user_form = UserForm(request.POST, instance=usuario)
+        if user_form.is_valid():
+            user_form.save()
+            return redirect("login")
+        else:
+            print(user_form.errors)
+            print("error")
+
 
 
 def adminPrincipalProductos(request):

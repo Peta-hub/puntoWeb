@@ -6,6 +6,8 @@ urlpatterns = [
 
     path('login/',views.login, name="login"),
     path('Recuperar/',views.recuperarContraseña, name="recuperar"),
+    path('Confirmar/<int:pk>/',views.recuperarContraseña2, name="recuperar2"),
+    path('reset_password/<int:pk>/', views.cambiar_contrasena, name="cambiar"),
     path('clientes/',views.userClientes, name="clientes"),
     path('productos/',views.userProductos, name="productos"),
     path('compras/',views.userCompras, name="compras"),
