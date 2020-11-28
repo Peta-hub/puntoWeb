@@ -14,6 +14,9 @@ from puntoVenta.models import Clientes, Productos, Proveedores, Recuperar, Mater
 
 from puntoVenta.forms import UserForm
 
+from puntoVenta.forms import CompraForm
+from puntoVenta.models import Compras
+
 
 def login(request):
     if request.method == 'POST':
@@ -205,7 +208,41 @@ def userProductos(request):
 
 
 def userCompras(request):
-    return render(request, "puntoVentaTemplates/userCompras.html")
+    if request.method == "POST":
+        compras_form = CompraForm(request.POST)
+        if compras_form.is_valid():
+            compras_form.save()
+        return redirect("compras")
+    else:  # si es get, es decir cuando solo se entra a la pagina
+        compras_form = CompraForm()
+        compras = Compras.objects.all()
+    return render(request, "puntoVentaTemplates/userCompras.html", {"form": compras_form, "compras": compras})
+
+
+def eliminar_compra(request,pk=""):  # se eliminara un objeto de la bd ESTA FUNCION NO DEVUELVE NINGUNA PAGINA SOLO ELIMINA AL AUTOR Y REDIRIJE A LA PAGINA QUE LOS LISTA PARA QUE YA NO APAREZCA
+    compra = Compras.objects.get(id=pk)
+    compra.delete()
+    return redirect("compras")
+
+def editarCompra(request,pk=""):  # se editara un cliente desde una url, esta funcion recibe el id de un cliente para editarlo
+    compras_form = None
+    error = None
+    print("hola soy la pk",pk)
+    print(type(pk))
+    try:
+        compra = Compras.objects.get(id=pk)  # SON LAS MISMAS CONSULTAS QUE HACEMOS EN SHELL
+        if request.method == "GET":
+            compras_form = CompraForm(instance=compra)  # creamos un formulario y lo renderizamos , decimos que la instancia que utilizara es el Autor que busco el usuario por eso se pone la variable de arriba
+        else:
+            compras_form = CompraForm(request.POST,instance=compra)
+            if compras_form.is_valid():
+                compras_form.save()
+            return redirect("compras")
+    except ObjectDoesNotExist as e:
+        error = e
+    return render(request, 'puntoVentaTemplates/actualizar_userCompras.html', {'form': compras_form,'error': error, "id_Compra":pk})
+
+
 
 
 def userVentas(request):
@@ -223,6 +260,8 @@ def userProveedores(request):
         proveedor_form = ProveedorForm()
         proveedores = Proveedores.objects.all()
     return render(request, "puntoVentaTemplates/userProveedores.html", {"form": proveedor_form, "proveedores": proveedores})
+
+
 
 def eliminar_proveedor(request,pk=""):  # se eliminara un objeto de la bd ESTA FUNCION NO DEVUELVE NINGUNA PAGINA SOLO ELIMINA AL AUTOR Y REDIRIJE A LA PAGINA QUE LOS LISTA PARA QUE YA NO APAREZCA
     proveedor = Proveedores.objects.get(id_Proveedor=pk)

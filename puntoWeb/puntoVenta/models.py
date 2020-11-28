@@ -14,11 +14,13 @@ class Clientes(models.Model):
     direccion = models.CharField("Direccion cliente", max_length=16, blank=True, null=False, default="")
     telefono = models.CharField("Telefono cliente", max_length=16, blank=True, null=False, default="")
 
+
 class Productos(models.Model):
     codigo = models.CharField("Identificador", primary_key=True, max_length=4, blank=True, null=False, default="")
     nombre = models.CharField("Nombre producto", max_length=20, blank=True, null=False, default="")
     categoria = models.CharField("Categoria", max_length=20, blank=True, null=False, default="")
     precio = models.IntegerField("Precio sugerido", blank=True, null=False, default="")
+
 
 class Proveedores(models.Model):
     id_Proveedor = models.CharField("Identificador", primary_key=True, max_length=4, blank=True, null=False, default="")
@@ -26,8 +28,24 @@ class Proveedores(models.Model):
     direccion = models.CharField("Direccion proveedor", max_length=30, blank=True, null=False, default="")
     telefono = models.CharField("Telefono proveedor", max_length=16, blank=True, null=False, default="")
 
+    def __str__(self):
+        return self.nombre
+
+
 class Materiales(models.Model):
     id_Material = models.CharField("Identificador", primary_key=True, max_length=4, blank=True, null=False, default="")
     nombre = models.CharField("Nombre producto", max_length=30, blank=True, null=False, default="")
     medidas = models.CharField("Telefono proveedor", max_length=16, blank=True, null=False, default="")
     precio = models.IntegerField("Precio sugerido", blank=True, null=False, default="")
+
+    def __str__(self):  # devuelve el nombre del objeto al verlo en la bd para que podamos ver de que objeto se trata!
+        return self.nombre
+
+
+class Compras(models.Model):
+    id = models.AutoField("Identificador", primary_key=True, blank=False, null=False)
+    cantidad = models.IntegerField("Cantidad: ", blank=True, null=False, default="")
+    precio = models.FloatField("Precio: ",blank=True, null=False, default=0)
+    fecha_compra = models.DateTimeField(auto_now_add=True)
+    material = models.OneToOneField(Materiales, on_delete=models.CASCADE)
+    proveedor = models.OneToOneField(Proveedores, on_delete=models.CASCADE)

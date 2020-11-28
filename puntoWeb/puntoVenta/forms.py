@@ -2,7 +2,8 @@ from django import forms
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.hashers import make_password
 from django.contrib.auth.models import User
-from puntoVenta.models import Clientes, Productos, Proveedores, Recuperar, Materiales
+from puntoVenta.models import Clientes, Productos, Proveedores, Recuperar, Materiales, Compras
+
 
 
 class FormularioLogin(AuthenticationForm):
@@ -327,3 +328,45 @@ class MaterialForm(forms.ModelForm):
                 }
             ),
         }
+
+
+class CompraForm(forms.ModelForm):
+    class Meta:
+        model = Compras
+        fields = ('cantidad', 'precio', 'material', 'proveedor')
+        label = {
+            'cantidad': 'Cantidad: ',
+            'precio': 'Precio: ',
+            'material': 'Material: ',
+            'proveedor': 'Proveedor: ',
+        }
+        widgets = {
+            'cantidad': forms.TextInput(
+                attrs={
+                    'class': 'form-control',
+                    'id': 'cantidad',
+                    'style': 'background-color: #FEFCAE',
+                    'size': '2'
+                }
+            ),
+            'precio': forms.TextInput(
+                attrs={
+                    'class': 'form-control',
+                    'id': 'precio',
+                    'style': 'background-color: #FEFCAE',
+                    'size': '2'
+                }
+            ),
+            'material': forms.Select(
+                attrs={
+                    'class': 'form-control',
+                }
+            ),
+            'proveedor': forms.Select(
+                attrs={
+                    'class': 'form-control',
+                }
+            ),
+        }
+
+
