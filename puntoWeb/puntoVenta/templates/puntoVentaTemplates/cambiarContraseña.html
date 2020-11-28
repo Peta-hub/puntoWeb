@@ -15,11 +15,11 @@
     <form method="POST" action="{% url 'cambiar' usuario.id %}">
         {% csrf_token %}
         <div class="row form-group">
-            <div class="col col-md-3">{{ form.username.label }}</div>
+            <div class="col col-md-3">Usuario</div>
             <div class="col-12 col-md-9">{{ form.username }}</div>
         </div>
         <div class="row form-group">
-            <div class="col col-md-3">{{ form.password.label }}</div>
+            <div class="col col-md-3">Cambiar contraseña</div>
             <div class="col-12 col-md-9">{{ form.password }}</div>
         </div>
         <div class="row form-group">

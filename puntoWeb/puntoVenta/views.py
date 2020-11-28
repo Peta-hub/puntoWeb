@@ -4,13 +4,13 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.shortcuts import render, HttpResponse, redirect
 from django.urls import reverse_lazy
 from django.views.generic import ListView, UpdateView, CreateView, DeleteView
-from puntoVenta.forms import FormularioLogin
+from puntoVenta.forms import FormularioLogin, MaterialForm
 from puntoVenta.forms import ClienteForm, ProductoForm, ProveedorForm, RecuperarForm
 from django.contrib.auth import authenticate, login as do_login
 
 
 # Create your views here.
-from puntoVenta.models import Clientes, Productos, Proveedores, Recuperar
+from puntoVenta.models import Clientes, Productos, Proveedores, Recuperar, Materiales
 
 from puntoVenta.forms import UserForm
 
@@ -43,6 +43,7 @@ def recuperarContraseña(request):
         pregunta = Recuperar.objects.get(user=usuario)
         return render(request, "puntoVentaTemplates/recuperarContraseña2.html",{"pregunta":pregunta,"usuario":usuario,"form":RecuperarForm})
     return render(request, "puntoVentaTemplates/recuperarContraseña.html", {"form": FormularioLogin})
+
 
 def recuperarContraseña2(request, pk=0):
     if request.method == 'POST':
@@ -110,8 +111,45 @@ def editarProducto(request,pk=""):  # se editara un cliente desde una url, esta 
 def adminDetallesProducto(request):
     return render(request, "puntoVentaTemplates/adminDetallesProducto.html")
 
+
+
 def adminMateriales(request):
-    return render(request, "puntoVentaTemplates/adminMateriales.html")
+    if request.method == "POST":
+        material_form = MaterialForm(request.POST)
+        print(request.POST)
+        if material_form.is_valid():
+            material_form.save()
+        return redirect("adminMateriales")
+    else:  # si es get, es decir cuando solo se entra a la pagina
+        material_form = MaterialForm()
+        materiales = Materiales.objects.all()
+    return render(request, "puntoVentaTemplates/adminMateriales.html",{"form": material_form, "materiales": materiales})
+
+
+def eliminar_material(request,pk=""):  # se eliminara un objeto de la bd ESTA FUNCION NO DEVUELVE NINGUNA PAGINA SOLO ELIMINA AL AUTOR Y REDIRIJE A LA PAGINA QUE LOS LISTA PARA QUE YA NO APAREZCA
+    material = Materiales.objects.get(id_Material=pk)
+    material.delete()
+    return redirect("adminMateriales")
+
+def editarMaterial(request,pk=""):  # se editara un cliente desde una url, esta funcion recibe el id de un cliente para editarlo
+    material_form = None
+    error = None
+    try:
+        material = Materiales.objects.get(id_Material=pk)  # SON LAS MISMAS CONSULTAS QUE HACEMOS EN SHELL
+        if request.method == "GET":
+            material_form = MaterialForm(instance=material)  # creamos un formulario y lo renderizamos , decimos que la instancia que utilizara es el Autor que busco el usuario por eso se pone la variable de arriba
+        else:
+            material_form = MaterialForm(request.POST,instance=material)
+            if material_form.is_valid():
+                material_form.save()
+            return redirect("adminMateriales")
+    except ObjectDoesNotExist as e:
+        error = e
+    return render(request, 'puntoVentaTemplates/actualizar_adminMateriales.html', {'form': material_form,'error': error, "id_Material":pk})
+
+
+
+
 
 def adminUsuarios(request):
     return render(request, "puntoVentaTemplates/adminUsuarios.html")
