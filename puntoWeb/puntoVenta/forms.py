@@ -2,7 +2,7 @@ from django import forms
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.hashers import make_password
 from django.contrib.auth.models import User
-from puntoVenta.models import Clientes, Productos, Proveedores, Recuperar, Materiales, Compras
+from puntoVenta.models import Clientes, Productos, Proveedores, Recuperar, Materiales, Compras, Ventas
 
 
 
@@ -370,3 +370,53 @@ class CompraForm(forms.ModelForm):
         }
 
 
+
+class VentaForm(forms.ModelForm):
+    class Meta:
+        model = Ventas
+        fields = ('cantidad', 'precio', 'producto', 'cambio','paga')
+        label = {
+            'cantidad': 'Cantidad: ',
+            'precio': 'Precio: ',
+            'material': 'Material: ',
+            'proveedor': 'Proveedor: ',
+        }
+        widgets = {
+            'cantidad': forms.TextInput(
+                attrs={
+                    'class': 'form-control',
+                    'id': 'cantidad',
+                    'style': 'background-color: #FEFCAE',
+                    'size': '2'
+                }
+            ),
+            'precio': forms.TextInput(
+                attrs={
+                    'class': 'form-control',
+                    'id': 'precio',
+                    'style': 'background-color: #FEFCAE',
+                    'size': '4'
+                }
+            ),
+            'producto': forms.Select(
+                attrs={
+                    'class': 'form-control',
+                }
+            ),
+            'cambio': forms.TextInput(
+                attrs={
+                    'class': 'form-control',
+                    'id': 'cambio',
+                    'style': 'background-color: #FEFCAE',
+                    'size': '2'
+                }
+            ),
+            'paga': forms.TextInput(
+                attrs={
+                    'class': 'form-control',
+                    'id': 'paga',
+                    'style': 'background-color: #FEFCAE',
+                    'size': '4'
+                }
+            ),
+        }

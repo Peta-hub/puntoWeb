@@ -4,13 +4,13 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.shortcuts import render, HttpResponse, redirect
 from django.urls import reverse_lazy
 from django.views.generic import ListView, UpdateView, CreateView, DeleteView
-from puntoVenta.forms import FormularioLogin, MaterialForm
+from puntoVenta.forms import FormularioLogin, MaterialForm, VentaForm
 from puntoVenta.forms import ClienteForm, ProductoForm, ProveedorForm, RecuperarForm
 from django.contrib.auth import authenticate, login as do_login
 
 
 # Create your views here.
-from puntoVenta.models import Clientes, Productos, Proveedores, Recuperar, Materiales
+from puntoVenta.models import Clientes, Productos, Proveedores, Recuperar, Materiales, Ventas
 
 from puntoVenta.forms import UserForm
 
@@ -246,7 +246,43 @@ def editarCompra(request,pk=""):  # se editara un cliente desde una url, esta fu
 
 
 def userVentas(request):
-    return render(request, "puntoVentaTemplates/userVentas.html")
+    if request.method == "POST":
+        ventas_form = VentaForm(request.POST)
+        if ventas_form.is_valid():
+            ventas_form.save()
+        return redirect("ventas")
+    else:  # si es get, es decir cuando solo se entra a la pagina
+        ventas_form = VentaForm()
+        ventas = Ventas.objects.all()
+    return render(request, "puntoVentaTemplates/userVentas.html", {"form": ventas_form, "ventas": ventas})
+
+
+def eliminar_venta(request,pk=""):  # se eliminara un objeto de la bd ESTA FUNCION NO DEVUELVE NINGUNA PAGINA SOLO ELIMINA AL AUTOR Y REDIRIJE A LA PAGINA QUE LOS LISTA PARA QUE YA NO APAREZCA
+    venta = Ventas.objects.get(id=pk)
+    venta.delete()
+    return redirect("ventas")
+
+
+def editarVenta(request,pk=""):  # se editara un cliente desde una url, esta funcion recibe el id de un cliente para editarlo
+    ventas_form = None
+    error = None
+    print("hola soy la pk",pk)
+    print(type(pk))
+    try:
+        venta = Ventas.objects.get(id=pk)  # SON LAS MISMAS CONSULTAS QUE HACEMOS EN SHELL
+        if request.method == "GET":
+            ventas_form = VentaForm(instance=venta)  # creamos un formulario y lo renderizamos , decimos que la instancia que utilizara es el Autor que busco el usuario por eso se pone la variable de arriba
+        else:
+            ventas_form = VentaForm(request.POST,instance=venta)
+            if ventas_form.is_valid():
+                ventas_form.save()
+            return redirect("ventas")
+    except ObjectDoesNotExist as e:
+        error = e
+    return render(request, 'puntoVentaTemplates/actualizar_userVentas.html', {'form': ventas_form,'error': error, "id":pk})
+
+
+
 
 
 def userProveedores(request):

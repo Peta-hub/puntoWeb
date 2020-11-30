@@ -29,4 +29,6 @@ urlpatterns = [
     path('actualizar_material/<str:pk>/',views.editarMaterial, name="actualizar_material"),
     path('eliminar_compra/<int:pk>/',views.eliminar_compra, name="eliminar_compra"),
     path('actualizar_compra/<int:pk>/',views.editarCompra, name="actualizar_compra"),
+    path('eliminar_venta/<int:pk>/',views.eliminar_venta, name="eliminar_venta"),
+    path('actualizar_venta/<int:pk>/',views.editarVenta, name="actualizar_venta"),
 ]
