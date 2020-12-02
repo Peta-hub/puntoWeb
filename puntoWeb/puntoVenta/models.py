@@ -56,10 +56,16 @@ class Compras(models.Model):
 
 class Ventas(models.Model):
     id = models.AutoField("Identificador", primary_key=True, blank=False, null=False)
-    producto = models.OneToOneField(Productos, on_delete=models.CASCADE)
+    producto = models.ForeignKey(Productos, on_delete=models.CASCADE)
     cantidad = models.IntegerField("Cantidad: ", blank=True, null=False, default="")
     paga = models.FloatField("Paga: ", blank=True, null=False, default=0)
     precio = models.FloatField("Precio: ", blank=True, null=False, default=0)
     cambio = models.FloatField("Cambio: ", blank=True, null=False, default=0)
     fecha_compra = models.DateTimeField(auto_now_add=True)
 
+
+class Detalles(models.Model):
+    codigo = models.CharField("Identificador", primary_key=True, max_length=4, blank=True, null=False, default="")
+    producto = models.ForeignKey(Productos, on_delete=models.CASCADE)
+    material = models.ForeignKey(Materiales, on_delete=models.CASCADE)
+    cantidad = models.IntegerField("Cantidad: ", blank=True, null=False, default="")

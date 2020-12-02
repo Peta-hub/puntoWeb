@@ -58,7 +58,7 @@
         <div class="col-md-3" style="border: 1px solid #000; background-color: white;"><h3 style="color: black;">Precio</h3>{{ form.precio }}</div>
         <div class="col-md-3" style="border: 1px solid #000; background-color: white;"><h3 style="color: black;">Paga con</h3>{{ form.paga }}</div>
 
-        <div class="col-md-4" style="border: 1px solid #000; background-color: white;"><h3 style="color: black;">Cambio</h3>{{ form.cambio }}</div>
+        <div class="col-md-4" style="border: 1px solid #000; background-color: white;"></div>
       </div>
       <!--Cuartas filas-->
 
@@ -86,6 +86,7 @@
                         <th>Cantidad</th>
                         <th>Precio</th>
                         <th>Paga con</th>
+                        <th>Cambio</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -96,6 +97,7 @@
                     <td>{{ venta.cantidad }}</td>
                     <td>{{ venta.precio }}</td>
                     <td>{{ venta.paga }}</td>
+                    <td>{{ venta.cambio }}</td>
                 <td>
                 <a href="{% url 'actualizar_venta' venta.id %}" class="btn btn-primary">Editar</a>
                 <a href="{% url 'eliminar_venta' venta.id %}" class="btn btn-danger">Eliminar</a>

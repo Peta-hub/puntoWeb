@@ -2,7 +2,7 @@ from django import forms
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.hashers import make_password
 from django.contrib.auth.models import User
-from puntoVenta.models import Clientes, Productos, Proveedores, Recuperar, Materiales, Compras, Ventas
+from puntoVenta.models import Clientes, Productos, Proveedores, Recuperar, Materiales, Compras, Ventas, Detalles
 
 
 
@@ -330,6 +330,50 @@ class MaterialForm(forms.ModelForm):
         }
 
 
+
+
+class DetalleForm(forms.ModelForm):
+    class Meta:
+        model = Detalles
+        fields = ('codigo', 'producto', 'material', 'cantidad')
+        label = {
+            'codigo': 'id_Material',
+            'producto': 'Producto',
+            'material': 'Material',
+            'cantidad': 'cantidad',
+        }
+        widgets = {
+            'codigo': forms.TextInput(
+                attrs={
+                    'class': 'form-control',
+                    'id': 'identificador',
+                    'style': 'background-color: #FEFCAE',
+                    'size': '10'
+                }
+            ),
+            'producto': forms.Select(
+                attrs={
+                    'class': 'form-control',
+                }
+            ),
+            'material': forms.Select(
+                attrs={
+                    'class': 'form-control',
+                }
+            ),
+            'cantidad': forms.TextInput(
+                attrs={
+                    'class': 'form-control',
+                    'id': 'cantidad',
+                    'style': 'background-color: #FEFCAE',
+                    'size': '20'
+                }
+            ),
+        }
+
+
+
+
 class CompraForm(forms.ModelForm):
     class Meta:
         model = Compras
@@ -420,3 +464,17 @@ class VentaForm(forms.ModelForm):
                 }
             ),
         }
+
+    def save(self, commit=True):
+        venta = super().save(commit=False)
+
+        valor = (self.cleaned_data['precio'])
+        pagar = (self.cleaned_data['paga'])
+
+
+        cambio = float(pagar) - float(valor)
+
+        venta.cambio = cambio
+        if commit:
+            venta.save()
+        return venta

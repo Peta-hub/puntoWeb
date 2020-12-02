@@ -4,13 +4,13 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.shortcuts import render, HttpResponse, redirect
 from django.urls import reverse_lazy
 from django.views.generic import ListView, UpdateView, CreateView, DeleteView
-from puntoVenta.forms import FormularioLogin, MaterialForm, VentaForm
+from puntoVenta.forms import FormularioLogin, MaterialForm, VentaForm, DetalleForm
 from puntoVenta.forms import ClienteForm, ProductoForm, ProveedorForm, RecuperarForm
 from django.contrib.auth import authenticate, login as do_login
 
 
 # Create your views here.
-from puntoVenta.models import Clientes, Productos, Proveedores, Recuperar, Materiales, Ventas
+from puntoVenta.models import Clientes, Productos, Proveedores, Recuperar, Materiales, Ventas, Detalles
 
 from puntoVenta.forms import UserForm
 
@@ -109,10 +109,43 @@ def editarProducto(request,pk=""):  # se editara un cliente desde una url, esta 
 
 
 
-
-
 def adminDetallesProducto(request):
-    return render(request, "puntoVentaTemplates/adminDetallesProducto.html")
+    if request.method == "POST":
+        detalles_form = DetalleForm(request.POST)
+        if detalles_form.is_valid():
+            detalles_form.save()
+        return redirect("adminDetaProducto")
+    else:  # si es get, es decir cuando solo se entra a la pagina
+        detalles_form = DetalleForm()
+        detalles = Detalles.objects.all()
+    return render(request, "puntoVentaTemplates/adminDetallesProducto.html", {"form": detalles_form, "detalles": detalles})
+
+
+def eliminar_detalle(request,pk=""):  # se eliminara un objeto de la bd ESTA FUNCION NO DEVUELVE NINGUNA PAGINA SOLO ELIMINA AL AUTOR Y REDIRIJE A LA PAGINA QUE LOS LISTA PARA QUE YA NO APAREZCA
+    detalle = Detalles.objects.get(codigo=pk)
+    detalle.delete()
+    return redirect("adminDetaProducto")
+
+
+def editarDetalle(request,pk=""):  # se editara un cliente desde una url, esta funcion recibe el id de un cliente para editarlo
+    detalles_form = None
+    error = None
+    print("hola soy la pk",pk)
+    print(type(pk))
+    try:
+        detalle = Detalles.objects.get(codigo=pk)  # SON LAS MISMAS CONSULTAS QUE HACEMOS EN SHELL
+        if request.method == "GET":
+            detalles_form = DetalleForm(instance=detalle)  # creamos un formulario y lo renderizamos , decimos que la instancia que utilizara es el Autor que busco el usuario por eso se pone la variable de arriba
+        else:
+            detalles_form = DetalleForm(request.POST,instance=detalle)
+            if detalles_form.is_valid():
+                detalles_form.save()
+            return redirect("adminDetaProducto")
+    except ObjectDoesNotExist as e:
+        error = e
+    return render(request, 'puntoVentaTemplates/actualizar_adminDetalles.html', {'form': detalles_form,'error': error, "codigo":pk})
+
+
 
 
 
@@ -204,7 +237,21 @@ def editarCliente(request,pk=""):  # se editara un cliente desde una url, esta f
 
 
 def userProductos(request):
-    return render(request, "puntoVentaTemplates/userProductos.html")
+    if request.method == "POST":
+
+        if request.POST["nombre"]:
+
+            nombre = request.POST["nombre"]
+
+            productos = Productos.objects.filter(nombre__icontains=nombre)
+
+            producto_form = ProductoForm()
+
+            return render(request, "puntoVentaTemplates/userProductos.html", {"form": producto_form,"productos": productos, "query": nombre})
+
+    else:
+     producto_form = ProductoForm()
+     return render(request, "puntoVentaTemplates/userProductos.html", {"form": producto_form})
 
 
 def userCompras(request):

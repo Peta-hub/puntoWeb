@@ -19,6 +19,7 @@ urlpatterns = [
     path('adminUsuarios/',views.adminUsuarios, name="adminUsuarios"),
     path('adminReportes/',views.adminReportes, name="adminReportes"),
 
+
     path('eliminar_cliente/<str:pk>/',views.eliminar_cliente, name="eliminar_cliente"),
     path('actualizar_cliente/<str:pk>/',views.editarCliente, name="actualizar_cliente"),
     path('eliminar_producto/<str:pk>/',views.eliminar_producto, name="eliminar_producto"),
@@ -31,4 +32,6 @@ urlpatterns = [
     path('actualizar_compra/<int:pk>/',views.editarCompra, name="actualizar_compra"),
     path('eliminar_venta/<int:pk>/',views.eliminar_venta, name="eliminar_venta"),
     path('actualizar_venta/<int:pk>/',views.editarVenta, name="actualizar_venta"),
+    path('eliminar_detalle/<str:pk>/',views.eliminar_detalle, name="eliminar_detalle"),
+    path('actualizar_detalle/<str:pk>/',views.editarDetalle, name="actualizar_detalle"),
 ]
