@@ -18,13 +18,13 @@ class FormularioLogin(AuthenticationForm):
 class UserForm(forms.ModelForm):
     class Meta:
         model = User
-        fields = ['username', 'password', 'first_name', 'last_name', 'email']
+        fields = ['username', 'password', 'first_name', 'last_name','email']
         labels = {
             'username': 'Nombre de usuario',
             'password': 'Contraseña del administrador',
             'first_name': 'Nombre real del administrador',
             'last_name': 'Apellidos del administrador',
-            'email': 'Correo del administrador',
+            'correo': 'Correo',
         }
 
         widgets = {
@@ -56,11 +56,11 @@ class UserForm(forms.ModelForm):
                     'id': 'apellidos'
                 }
             ),
-            'email': forms.EmailInput(
+            'email': forms.TextInput(
                 attrs={
                     'class': 'form-control',
-                    'placeholder': 'Ingrese el correo del administrador',
-                    'id': 'correo'
+                    'placeholder': 'Ingrese los apellidos del administrador',
+                    'id': 'apellidos'
                 }
             ),
         }
@@ -79,21 +79,13 @@ class UserForm(forms.ModelForm):
 class RecuperarForm(forms.ModelForm):
     class Meta:
         model = Recuperar
-        fields = ('user', 'pregunta_secreta', 'respuesta')
+        fields = ( 'pregunta_secreta', 'respuesta')
         label = {
-            'user': 'user',
+
             'pregunta_secreta': 'pregunta_secreta',
             'respuesta': 'Respuesta',
         }
         widgets = {
-            'user': forms.TextInput(
-                attrs={
-                    'class': 'form-control',
-                    'id': 'identificador',
-                    'style': 'background-color: #FEFCAE',
-                    'size': '10'
-                }
-            ),
             'pregunta_secreta': forms.TextInput(
                 attrs={
                     'class': 'form-control',

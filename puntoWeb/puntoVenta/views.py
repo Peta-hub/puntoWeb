@@ -191,18 +191,18 @@ def adminUsuarios(request):
     if request.method == "POST":
         form = UserForm(request.POST)
         recuperar_form = RecuperarForm(request.POST)
-
         if form.is_valid() and recuperar_form.is_valid():
             user = form.save()
             recuperar = recuperar_form.save(commit=False)
             recuperar.user = user
             recuperar.save()
-            return redirect("login")
+            return redirect("adminUsuarios")
+        else:
+            print(recuperar_form.errors)
     else:
         form = UserForm()
         recuperar_form = RecuperarForm()
         preguntas = Recuperar.objects.all()
-        print("Soy la pregunta: ",preguntas)
         contexto = {"form":form,"recuperar_form":recuperar_form,"usuarios":preguntas}
         return render(request,"puntoVentaTemplates/adminUsuarios.html",contexto)
 
