@@ -1,10 +1,19 @@
 from django.contrib.auth.models import User
 from django.db import models
+from django.db.models.signals import post_save
+from django.dispatch import receiver
+
 
 class Recuperar(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE) # Si eliminan al usuario ligado tambien se eliminan sus campos en esta tabla
     pregunta_secreta = models.CharField("Pregunta Secreta", max_length=35, blank=False, null=False, default=0)
     respuesta = models.CharField("Respuesta de la pregunta secreta", max_length=30, blank=True, null=True, default=0)
+
+    @receiver(post_save, sender=User)
+    def update_profile_signal(sender, instance, created, **kwargs):
+        if created:
+            Recuperar.objects.create(user=instance)
+        instance.recuperar.save()
 
 
 class Clientes(models.Model):

@@ -16,15 +16,6 @@ class FormularioLogin(AuthenticationForm):
 
 
 class UserForm(forms.ModelForm):
-    pwd2 = forms.CharField(label='Contraseña de confirmación', widget=forms.PasswordInput(
-        attrs={
-            'class': 'form-control',
-            'placeholder': 'Ingrese de nuevo la contraseña',
-            'id': 'pwd2',
-            'required': 'required',
-        }
-    ))
-
     class Meta:
         model = User
         fields = ['username', 'password', 'first_name', 'last_name', 'email']
@@ -74,12 +65,6 @@ class UserForm(forms.ModelForm):
             ),
         }
 
-    def clean_pwd2(self):  # MML Hacemos la verificacion de si la contraeña coincide
-        pwd1 = self.cleaned_data['password']
-        pwd2 = self.cleaned_data['pwd2']
-        if pwd1 != pwd2:
-            raise forms.ValidationError('Las contraseñas no coinciden')  # Este es el error que esta en forms.error
-        return pwd2
 
     def save(self, commit=True):
         user = super().save(commit=False)  # MML se redefine la forma en que se guarda la contraseña

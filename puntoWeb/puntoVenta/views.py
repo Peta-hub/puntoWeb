@@ -188,12 +188,28 @@ def editarMaterial(request,pk=""):  # se editara un cliente desde una url, esta 
 
 
 def adminUsuarios(request):
-    return render(request, "puntoVentaTemplates/adminUsuarios.html")
+    if request.method == "POST":
+        form = UserForm(request.POST)
+        recuperar_form = RecuperarForm(request.POST)
+
+        if form.is_valid() and recuperar_form.is_valid():
+            user = form.save()
+            recuperar = recuperar_form.save(commit=False)
+            recuperar.user = user
+            recuperar.save()
+            return redirect("login")
+    else:
+        form = UserForm()
+        recuperar_form = RecuperarForm()
+        preguntas = Recuperar.objects.all()
+        print("Soy la pregunta: ",preguntas)
+        contexto = {"form":form,"recuperar_form":recuperar_form,"usuarios":preguntas}
+        return render(request,"puntoVentaTemplates/adminUsuarios.html",contexto)
+
 
 
 def adminReportes(request):
     return render(request, "puntoVentaTemplates/adminReportes.html")
-
 
 
 #---------------------------- USUARIOS --------------------------------------#
