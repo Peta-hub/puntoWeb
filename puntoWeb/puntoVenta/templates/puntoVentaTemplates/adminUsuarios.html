@@ -112,7 +112,8 @@
                     <td>{{ usuario.pregunta_secreta }}</td>
                     <td>{{ usuario.respuesta }}</td>
                 <td>
-
+               <a href="{% url 'actualizar_usuario' usuario.user.id %}" class="btn btn-primary">Editar</a>
+               <a href="{% url 'eliminar_usuario' usuario.user.id %}" class="btn btn-danger">Eliminar</a>
                 </td>
             </tr>
             {% endfor %}

@@ -1,0 +1,28 @@
+.bordo{
+	background:#666;
+	}
+.verde{
+	color:#0C3;}
+.azul{color:#00F;}
+.rosa{color:#F3C;}
+.verdeoscuro{color:#090;}
+
+span{
+	font-size:40px;
+	color:#0CF;
+}
+
+th a{
+	display:block;
+	color:gray;
+	text-decoration:none;
+	font-size:20px;
+	}
+
+body{
+    margin:0;
+}
+
+h3{
+	color:white;
+}

@@ -7,7 +7,7 @@ from django.views.generic import ListView, UpdateView, CreateView, DeleteView
 from puntoVenta.forms import FormularioLogin, MaterialForm, VentaForm, DetalleForm
 from puntoVenta.forms import ClienteForm, ProductoForm, ProveedorForm, RecuperarForm
 from django.contrib.auth import authenticate, login as do_login
-
+from django.db.models import Sum
 
 # Create your views here.
 from puntoVenta.models import Clientes, Productos, Proveedores, Recuperar, Materiales, Ventas, Detalles
@@ -206,11 +206,39 @@ def adminUsuarios(request):
         contexto = {"form":form,"recuperar_form":recuperar_form,"usuarios":preguntas}
         return render(request,"puntoVentaTemplates/adminUsuarios.html",contexto)
 
+def eliminar_usuario(request,pk=""):  # se eliminara un objeto de la bd ESTA FUNCION NO DEVUELVE NINGUNA PAGINA SOLO ELIMINA AL AUTOR Y REDIRIJE A LA PAGINA QUE LOS LISTA PARA QUE YA NO APAREZCA
+    usuario = User.objects.get(id=pk)
+    usuario.delete()
+    return redirect("adminUsuarios")
+
+def editarUsuario(request,pk=""):  # se editara un cliente desde una url, esta funcion recibe el id de un cliente para editarlo
+    usuario = User.objects.get(id=pk)
+    if request.method == 'POST':
+        user_form = UserForm(request.POST, instance=usuario)
+        recuperar_form = RecuperarForm(request.POST, instance=usuario.recuperar)
+        if user_form.is_valid() and recuperar_form.is_valid():
+            user_form.save()
+            recuperar_form.save()
+            return redirect('adminUsuarios')
+        else:
+            print("error")
+    else:
+        print(request.user)
+        user_form = UserForm(instance=usuario)
+        recuperar_form = RecuperarForm(instance=usuario.recuperar)
+        return render(request, "puntoVentaTemplates/actualizar_adminUser.html", {'form': user_form,'form2': recuperar_form, 'iduser':pk })
+
+
 
 
 def adminReportes(request):
     return render(request, "puntoVentaTemplates/adminReportes.html")
 
+def adminReportesCompras(request):
+    compras_form = CompraForm()
+    compras = Compras.objects.all()
+    suma = Compras.objects.all().aggregate(Sum('precio'))
+    return render(request, "puntoVentaTemplates/adminReportesCompras.html", {"form": compras_form, "compras": compras,"total": suma})
 
 #---------------------------- USUARIOS --------------------------------------#
 

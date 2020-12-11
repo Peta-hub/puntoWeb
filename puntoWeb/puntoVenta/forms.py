@@ -31,35 +31,30 @@ class UserForm(forms.ModelForm):
             'username': forms.TextInput(
                 attrs={
                     'class': 'form-control',
-                    'placeholder': 'Ingrese el nombre de usuario',
                     'id': 'usr'
                 }
             ),
             'password': forms.PasswordInput(
                 attrs={
                     'class': 'form-control',
-                    'placeholder': 'Ingrese la contraseña del administrador',
                     'id': 'pwd'
                 }
             ),
             'first_name': forms.TextInput(
                 attrs={
                     'class': 'form-control',
-                    'placeholder': 'Ingrese el nombre del administrador',
                     'id': 'nombres'
                 }
             ),
             'last_name': forms.TextInput(
                 attrs={
                     'class': 'form-control',
-                    'placeholder': 'Ingrese los apellidos del administrador',
                     'id': 'apellidos'
                 }
             ),
             'email': forms.TextInput(
                 attrs={
                     'class': 'form-control',
-                    'placeholder': 'Ingrese los apellidos del administrador',
                     'id': 'apellidos'
                 }
             ),
@@ -124,7 +119,8 @@ class ClienteForm(forms.ModelForm):
                     'class': 'form-control',
                     'id': 'identificador',
                     'style': 'background-color: #FEFCAE',
-                    'size': '10'
+                    'size': '10',
+                    'required': True
                 }
             ),
             'nombre': forms.TextInput(
@@ -132,7 +128,8 @@ class ClienteForm(forms.ModelForm):
                     'class': 'form-control',
                     'id': 'nombre',
                     'style': 'background-color: #FEFCAE',
-                    'size': '25'
+                    'size': '25',
+                    'required': True
                 }
             ),
             'apellidos': forms.TextInput(
@@ -140,7 +137,8 @@ class ClienteForm(forms.ModelForm):
                     'class': 'form-control',
                     'id': 'apellidos',
                     'style': 'background-color: #FEFCAE',
-                    'size': '30'
+                    'size': '30',
+                    'required': True
                 }
             ),
             'direccion': forms.TextInput(
@@ -148,7 +146,8 @@ class ClienteForm(forms.ModelForm):
                     'class': 'form-control',
                     'id': 'direccion',
                     'style': 'background-color: #FEFCAE',
-                    'size': '30'
+                    'size': '30',
+                    'required': True
                 }
             ),
             'telefono': forms.TextInput(
@@ -156,7 +155,8 @@ class ClienteForm(forms.ModelForm):
                     'class': 'form-control',
                     'id': 'telefono',
                     'style': 'background-color: #FEFCAE',
-                    'size': '15'
+                    'size': '15',
+                    'required': True
                 }
             ),
         }
@@ -180,7 +180,8 @@ class ProveedorForm(forms.ModelForm):
                     'class': 'form-control',
                     'id': 'identificador',
                     'style': 'background-color: #FEFCAE',
-                    'size': '10'
+                    'size': '10',
+                    'required': True
                 }
             ),
             'nombre': forms.TextInput(
@@ -188,7 +189,8 @@ class ProveedorForm(forms.ModelForm):
                     'class': 'form-control',
                     'id': 'nombre',
                     'style': 'background-color: #FEFCAE',
-                    'size': '25'
+                    'size': '25',
+                    'required': True
                 }
             ),
             'direccion': forms.TextInput(
@@ -196,7 +198,8 @@ class ProveedorForm(forms.ModelForm):
                     'class': 'form-control',
                     'id': 'direccion',
                     'style': 'background-color: #FEFCAE',
-                    'size': '30'
+                    'size': '30',
+                    'required': True
                 }
             ),
             'telefono': forms.TextInput(
@@ -204,7 +207,8 @@ class ProveedorForm(forms.ModelForm):
                     'class': 'form-control',
                     'id': 'telefono',
                     'style': 'background-color: #FEFCAE',
-                    'size': '20'
+                    'size': '20',
+                    'required': True
                 }
             ),
         }
@@ -229,7 +233,8 @@ class ProductoForm(forms.ModelForm):
                     'class': 'form-control',
                     'id': 'identificador',
                     'style': 'background-color: #FEFCAE',
-                    'size': '10'
+                    'size': '10',
+                    'required': True
                 }
             ),
             'nombre': forms.TextInput(
@@ -237,7 +242,8 @@ class ProductoForm(forms.ModelForm):
                     'class': 'form-control',
                     'id': 'nombre',
                     'style': 'background-color: #FEFCAE',
-                    'size': '25'
+                    'size': '25',
+                    'required': True
                 }
             ),
             'categoria': forms.TextInput(
@@ -245,7 +251,8 @@ class ProductoForm(forms.ModelForm):
                     'class': 'form-control',
                     'id': 'categoria',
                     'style': 'background-color: #FEFCAE',
-                    'size': '30'
+                    'size': '30',
+                    'required': True
                 }
             ),
             'precio': forms.TextInput(
@@ -253,7 +260,8 @@ class ProductoForm(forms.ModelForm):
                     'class': 'form-control',
                     'id': 'direccion',
                     'style': 'background-color: #FEFCAE',
-                    'size': '20'
+                    'size': '20',
+                    'required': True
                 }
             ),
         }
@@ -277,7 +285,8 @@ class MaterialForm(forms.ModelForm):
                     'class': 'form-control',
                     'id': 'identificador',
                     'style': 'background-color: #FEFCAE',
-                    'size': '10'
+                    'size': '10',
+                    'required': True
                 }
             ),
             'nombre': forms.TextInput(
@@ -285,7 +294,8 @@ class MaterialForm(forms.ModelForm):
                     'class': 'form-control',
                     'id': 'nombre',
                     'style': 'background-color: #FEFCAE',
-                    'size': '25'
+                    'size': '25',
+                    'required': True
                 }
             ),
             'medidas': forms.TextInput(
@@ -293,7 +303,8 @@ class MaterialForm(forms.ModelForm):
                     'class': 'form-control',
                     'id': 'medidas',
                     'style': 'background-color: #FEFCAE',
-                    'size': '30'
+                    'size': '30',
+                    'required': True
                 }
             ),
             'precio': forms.TextInput(
@@ -301,7 +312,8 @@ class MaterialForm(forms.ModelForm):
                     'class': 'form-control',
                     'id': 'direccion',
                     'style': 'background-color: #FEFCAE',
-                    'size': '20'
+                    'size': '20',
+                    'required': True
                 }
             ),
         }
@@ -325,7 +337,8 @@ class DetalleForm(forms.ModelForm):
                     'class': 'form-control',
                     'id': 'identificador',
                     'style': 'background-color: #FEFCAE',
-                    'size': '10'
+                    'size': '10',
+                    'required': True
                 }
             ),
             'producto': forms.Select(
@@ -343,7 +356,8 @@ class DetalleForm(forms.ModelForm):
                     'class': 'form-control',
                     'id': 'cantidad',
                     'style': 'background-color: #FEFCAE',
-                    'size': '20'
+                    'size': '20',
+                    'required': True
                 }
             ),
         }
@@ -367,7 +381,8 @@ class CompraForm(forms.ModelForm):
                     'class': 'form-control',
                     'id': 'cantidad',
                     'style': 'background-color: #FEFCAE',
-                    'size': '2'
+                    'size': '2',
+                    'required': True
                 }
             ),
             'precio': forms.TextInput(
@@ -375,7 +390,8 @@ class CompraForm(forms.ModelForm):
                     'class': 'form-control',
                     'id': 'precio',
                     'style': 'background-color: #FEFCAE',
-                    'size': '2'
+                    'size': '2',
+                    'required': True
                 }
             ),
             'material': forms.Select(
@@ -408,7 +424,8 @@ class VentaForm(forms.ModelForm):
                     'class': 'form-control',
                     'id': 'cantidad',
                     'style': 'background-color: #FEFCAE',
-                    'size': '2'
+                    'size': '2',
+                    'required': True
                 }
             ),
             'precio': forms.TextInput(
@@ -416,7 +433,8 @@ class VentaForm(forms.ModelForm):
                     'class': 'form-control',
                     'id': 'precio',
                     'style': 'background-color: #FEFCAE',
-                    'size': '4'
+                    'size': '4',
+                    'required': True
                 }
             ),
             'producto': forms.Select(
@@ -429,7 +447,8 @@ class VentaForm(forms.ModelForm):
                     'class': 'form-control',
                     'id': 'cambio',
                     'style': 'background-color: #FEFCAE',
-                    'size': '2'
+                    'size': '2',
+                    'required': True
                 }
             ),
             'paga': forms.TextInput(
@@ -437,7 +456,8 @@ class VentaForm(forms.ModelForm):
                     'class': 'form-control',
                     'id': 'paga',
                     'style': 'background-color: #FEFCAE',
-                    'size': '4'
+                    'size': '4',
+                    'required': True
                 }
             ),
         }
