@@ -240,6 +240,13 @@ def adminReportesCompras(request):
     suma = Compras.objects.all().aggregate(Sum('precio'))
     return render(request, "puntoVentaTemplates/adminReportesCompras.html", {"form": compras_form, "compras": compras,"total": suma})
 
+def adminReportesVentas(request):
+    ventas_form = VentaForm()
+    ventas = Ventas.objects.all()
+    suma = Ventas.objects.all().aggregate(Sum('precio'))
+    return render(request, "puntoVentaTemplates/adminReportesVentas.html", {"form": ventas_form, "ventas": ventas,"total": suma})
+
+
 #---------------------------- USUARIOS --------------------------------------#
 
 def userClientes(request):
@@ -256,9 +263,19 @@ def userClientes(request):
 
 
 def eliminar_cliente(request,pk=""):  # se eliminara un objeto de la bd ESTA FUNCION NO DEVUELVE NINGUNA PAGINA SOLO ELIMINA AL AUTOR Y REDIRIJE A LA PAGINA QUE LOS LISTA PARA QUE YA NO APAREZCA
-    cliente = Clientes.objects.get(id=pk)
-    cliente.delete()
-    return redirect("clientes")
+    cliente_form = None
+    error = None
+    try:
+        cliente = Clientes.objects.get(id=pk)  # SON LAS MISMAS CONSULTAS QUE HACEMOS EN SHELL
+        if request.method == "GET":
+            cliente_form = ClienteForm(instance=cliente)  # creamos un formulario y lo renderizamos , decimos que la instancia que utilizara es el Cliente que busco el usuario por eso se pone la variable de arriba
+        else:                                      #cuando se llega con POST
+            cliente = Clientes.objects.get(id=pk)
+            cliente.delete()
+            return redirect("clientes")
+    except ObjectDoesNotExist as e:
+        error = e
+    return render(request, 'puntoVentaTemplates/eliminar_userClientes.html', {'form': cliente_form, 'error': error, "iduser": pk,'cliente':cliente })
 
 
 def editarCliente(request,pk=""):  # se editara un cliente desde una url, esta funcion recibe el id de un cliente para editarlo
@@ -267,7 +284,7 @@ def editarCliente(request,pk=""):  # se editara un cliente desde una url, esta f
     try:
         cliente = Clientes.objects.get(id=pk)  # SON LAS MISMAS CONSULTAS QUE HACEMOS EN SHELL
         if request.method == "GET":
-            cliente_form = ClienteForm(instance=cliente)  # creamos un formulario y lo renderizamos , decimos que la instancia que utilizara es el Autor que busco el usuario por eso se pone la variable de arriba
+            cliente_form = ClienteForm(instance=cliente)  # creamos un formulario y lo renderizamos , decimos que la instancia que utilizara es el Cliente que busco el usuario por eso se pone la variable de arriba
         else:
             cliente_form = ClienteForm(request.POST,instance=cliente)
             if cliente_form.is_valid():
@@ -311,9 +328,20 @@ def userCompras(request):
 
 
 def eliminar_compra(request,pk=""):  # se eliminara un objeto de la bd ESTA FUNCION NO DEVUELVE NINGUNA PAGINA SOLO ELIMINA AL AUTOR Y REDIRIJE A LA PAGINA QUE LOS LISTA PARA QUE YA NO APAREZCA
-    compra = Compras.objects.get(id=pk)
-    compra.delete()
-    return redirect("compras")
+    compra_form = None
+    error = None
+    try:
+        compra = Compras.objects.get(id=pk)  # SON LAS MISMAS CONSULTAS QUE HACEMOS EN SHELL
+        if request.method == "GET":
+            compra_form = CompraForm(instance=compra)  # creamos un formulario y lo renderizamos , decimos que la instancia que utilizara es el Cliente que busco el usuario por eso se pone la variable de arriba
+        else:  # cuando se llega con POST
+            compra = Compras.objects.get(id=pk)
+            compra.delete()
+            return redirect("compras")
+    except ObjectDoesNotExist as e:
+        error = e
+    return render(request, 'puntoVentaTemplates/eliminar_userCompras.html', {'form': compra_form, 'error': error, "iduser": pk, 'compra': compra})
+
 
 def editarCompra(request,pk=""):  # se editara un cliente desde una url, esta funcion recibe el id de un cliente para editarlo
     compras_form = None
@@ -349,9 +377,19 @@ def userVentas(request):
 
 
 def eliminar_venta(request,pk=""):  # se eliminara un objeto de la bd ESTA FUNCION NO DEVUELVE NINGUNA PAGINA SOLO ELIMINA AL AUTOR Y REDIRIJE A LA PAGINA QUE LOS LISTA PARA QUE YA NO APAREZCA
-    venta = Ventas.objects.get(id=pk)
-    venta.delete()
-    return redirect("ventas")
+    venta_form = None
+    error = None
+    try:
+        venta = Ventas.objects.get(id=pk)  # SON LAS MISMAS CONSULTAS QUE HACEMOS EN SHELL
+        if request.method == "GET":
+            venta_form = VentaForm(instance=venta)  # creamos un formulario y lo renderizamos , decimos que la instancia que utilizara es el Cliente que busco el usuario por eso se pone la variable de arriba
+        else:  # cuando se llega con POST
+            venta = Ventas.objects.get(id=pk)
+            venta.delete()
+            return redirect("ventas")
+    except ObjectDoesNotExist as e:
+        error = e
+    return render(request, 'puntoVentaTemplates/eliminar_userVentas.html',{'form': venta_form, 'error': error, "iduser": pk, 'venta': venta})
 
 
 def editarVenta(request,pk=""):  # se editara un cliente desde una url, esta funcion recibe el id de un cliente para editarlo

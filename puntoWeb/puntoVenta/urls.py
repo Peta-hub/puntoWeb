@@ -19,6 +19,7 @@ urlpatterns = [
     path('adminUsuarios/',views.adminUsuarios, name="adminUsuarios"),
     path('adminReportes/',views.adminReportes, name="adminReportes"),
     path('adminReportesCompras/',views.adminReportesCompras, name="reportesCompras"),
+    path('adminReportesVentas/',views.adminReportesVentas, name="reportesVentas"),
 
 
     path('eliminar_cliente/<str:pk>/',views.eliminar_cliente, name="eliminar_cliente"),
