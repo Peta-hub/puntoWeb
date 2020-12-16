@@ -85,9 +85,19 @@ def adminPrincipalProductos(request):
     return render(request, "puntoVentaTemplates/adminPrincipalProductos.html", {"form": producto_form, "productos": productos})
 
 def eliminar_producto(request,pk=""):  # se eliminara un objeto de la bd ESTA FUNCION NO DEVUELVE NINGUNA PAGINA SOLO ELIMINA AL AUTOR Y REDIRIJE A LA PAGINA QUE LOS LISTA PARA QUE YA NO APAREZCA
-    producto = Productos.objects.get(codigo=pk)
-    producto.delete()
-    return redirect("adminMain")
+    producto_form = None
+    error = None
+    try:
+        producto = Productos.objects.get(codigo=pk)  # SON LAS MISMAS CONSULTAS QUE HACEMOS EN SHELL
+        if request.method == "GET":
+            producto_form = ProductoForm(instance=producto)  # creamos un formulario y lo renderizamos , decimos que la instancia que utilizara es el Cliente que busco el usuario por eso se pone la variable de arriba
+        else:  # cuando se llega con POST
+            producto = Productos.objects.get(codigo=pk)
+            producto.delete()
+            return redirect("adminMain")
+    except ObjectDoesNotExist as e:
+        error = e
+    return render(request, 'puntoVentaTemplates/eliminar_adminProductos.html', {'form': producto_form, 'error': error, "iduser": pk, 'producto': producto})
 
 def editarProducto(request,pk=""):  # se editara un cliente desde una url, esta funcion recibe el id de un cliente para editarlo
     producto_form = None
@@ -122,9 +132,19 @@ def adminDetallesProducto(request):
 
 
 def eliminar_detalle(request,pk=""):  # se eliminara un objeto de la bd ESTA FUNCION NO DEVUELVE NINGUNA PAGINA SOLO ELIMINA AL AUTOR Y REDIRIJE A LA PAGINA QUE LOS LISTA PARA QUE YA NO APAREZCA
-    detalle = Detalles.objects.get(codigo=pk)
-    detalle.delete()
-    return redirect("adminDetaProducto")
+    detalles_form = None
+    error = None
+    try:
+        detalle = Detalles.objects.get(codigo=pk)  # SON LAS MISMAS CONSULTAS QUE HACEMOS EN SHELL
+        if request.method == "GET":
+            detalles_form = DetalleForm(instance=detalle)  # creamos un formulario y lo renderizamos , decimos que la instancia que utilizara es el Cliente que busco el usuario por eso se pone la variable de arriba
+        else:  # cuando se llega con POST
+            detalle = Detalles.objects.get(codigo=pk)
+            detalle.delete()
+            return redirect("adminDetaProducto")
+    except ObjectDoesNotExist as e:
+        error = e
+    return render(request, 'puntoVentaTemplates/eliminar_adminDetalles.html', {'form': detalles_form, 'error': error, "iduser": pk, 'detalle': detalle})
 
 
 def editarDetalle(request,pk=""):  # se editara un cliente desde una url, esta funcion recibe el id de un cliente para editarlo
@@ -163,9 +183,19 @@ def adminMateriales(request):
 
 
 def eliminar_material(request,pk=""):  # se eliminara un objeto de la bd ESTA FUNCION NO DEVUELVE NINGUNA PAGINA SOLO ELIMINA AL AUTOR Y REDIRIJE A LA PAGINA QUE LOS LISTA PARA QUE YA NO APAREZCA
-    material = Materiales.objects.get(id_Material=pk)
-    material.delete()
-    return redirect("adminMateriales")
+    material_form = None
+    error = None
+    try:
+        material = Materiales.objects.get(id_Material=pk)  # SON LAS MISMAS CONSULTAS QUE HACEMOS EN SHELL
+        if request.method == "GET":
+            material_form = MaterialForm(instance=material)  # creamos un formulario y lo renderizamos , decimos que la instancia que utilizara es el Cliente que busco el usuario por eso se pone la variable de arriba
+        else:  # cuando se llega con POST
+            material = Materiales.objects.get(id_Material=pk)
+            material.delete()
+            return redirect("adminMateriales")
+    except ObjectDoesNotExist as e:
+        error = e
+    return render(request, 'puntoVentaTemplates/eliminar_adminMateriales.html', {'form': material_form, 'error': error, "iduser": pk, 'material': material})
 
 def editarMaterial(request,pk=""):  # se editara un cliente desde una url, esta funcion recibe el id de un cliente para editarlo
     material_form = None
@@ -207,9 +237,19 @@ def adminUsuarios(request):
         return render(request,"puntoVentaTemplates/adminUsuarios.html",contexto)
 
 def eliminar_usuario(request,pk=""):  # se eliminara un objeto de la bd ESTA FUNCION NO DEVUELVE NINGUNA PAGINA SOLO ELIMINA AL AUTOR Y REDIRIJE A LA PAGINA QUE LOS LISTA PARA QUE YA NO APAREZCA
-    usuario = User.objects.get(id=pk)
-    usuario.delete()
-    return redirect("adminUsuarios")
+    user_form = None
+    error = None
+    try:
+        usuario = User.objects.get(id=pk)  # SON LAS MISMAS CONSULTAS QUE HACEMOS EN SHELL
+        if request.method == "GET":
+            user_form = UserForm(instance=usuario)  # creamos un formulario y lo renderizamos , decimos que la instancia que utilizara es el Cliente que busco el usuario por eso se pone la variable de arriba
+        else:  # cuando se llega con POST
+            usuario = User.objects.get(id=pk)
+            usuario.delete()
+            return redirect("adminUsuarios")
+    except ObjectDoesNotExist as e:
+        error = e
+    return render(request, 'puntoVentaTemplates/eliminar_adminUsuarios.html', {'form': user_form, 'error': error, "iduser": pk, 'usuario': usuario})
 
 def editarUsuario(request,pk=""):  # se editara un cliente desde una url, esta funcion recibe el id de un cliente para editarlo
     usuario = User.objects.get(id=pk)
@@ -429,9 +469,19 @@ def userProveedores(request):
 
 
 def eliminar_proveedor(request,pk=""):  # se eliminara un objeto de la bd ESTA FUNCION NO DEVUELVE NINGUNA PAGINA SOLO ELIMINA AL AUTOR Y REDIRIJE A LA PAGINA QUE LOS LISTA PARA QUE YA NO APAREZCA
-    proveedor = Proveedores.objects.get(id_Proveedor=pk)
-    proveedor.delete()
-    return redirect("proveedores")
+    proveedor_form = None
+    error = None
+    try:
+        proveedor = Proveedores.objects.get(id_Proveedor=pk)  # SON LAS MISMAS CONSULTAS QUE HACEMOS EN SHELL
+        if request.method == "GET":
+            proveedor_form = ProveedorForm(instance=proveedor)  # creamos un formulario y lo renderizamos , decimos que la instancia que utilizara es el Cliente que busco el usuario por eso se pone la variable de arriba
+        else:  # cuando se llega con POST
+            proveedor = Proveedores.objects.get(id_Proveedor=pk)
+            proveedor.delete()
+            return redirect("proveedores")
+    except ObjectDoesNotExist as e:
+        error = e
+    return render(request, 'puntoVentaTemplates/eliminar_userProveedores.html', {'form': proveedor_form, 'error': error, "iduser": pk, 'proveedor': proveedor})
 
 def editarProveedor(request,pk=""):  # se editara un cliente desde una url, esta funcion recibe el id de un cliente para editarlo
     proveedor_form = None
