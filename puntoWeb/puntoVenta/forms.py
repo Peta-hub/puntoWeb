@@ -220,12 +220,13 @@ class ProveedorForm(forms.ModelForm):
 class ProductoForm(forms.ModelForm):
     class Meta:
         model = Productos
-        fields = ('codigo', 'nombre', 'categoria', 'precio')
+        fields = ('codigo', 'nombre', 'categoria', 'precio', 'imagen')
         label = {
             'codigo': 'Codigo',
             'nombre': 'Nombre',
             'categoria': 'Categoria',
             'precio': 'Precio',
+            'imagen': 'Imagen',
         }
         widgets = {
             'codigo': forms.TextInput(

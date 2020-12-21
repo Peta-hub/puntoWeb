@@ -125,4 +125,10 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
+#URL con la cual se accederan a las imagenes que ya esten subidas
+MEDIA_URL = "/media/"
+#URL donde se almacenan las imagenes nuevas
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+
 STATICFILES_DIRS = (os.path.join(BASE_DIR, 'static'),)

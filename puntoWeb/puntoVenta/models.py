@@ -24,6 +24,7 @@ class Productos(models.Model):
     nombre = models.CharField("Nombre producto", max_length=20, blank=True, null=False, default="")
     categoria = models.CharField("Categoria", max_length=20, blank=True, null=False, default="")
     precio = models.IntegerField("Precio sugerido", blank=True, null=False, default="")
+    imagen = models.ImageField(null=True, blank=True)
 
     def __str__(self):  # devuelve el nombre del objeto al verlo en la bd para que podamos ver de que objeto se trata!
         return self.nombre

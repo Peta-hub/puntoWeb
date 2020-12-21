@@ -45,7 +45,7 @@
 
 
       <!--Segundas filas-->
-       <form method="POST" action="{% url 'adminMain' %}">
+       <form method="POST" action="{% url 'adminMain' %}" enctype="multipart/form-data"> <!-- enctype para mandar imagenes por partes -->
            {% csrf_token %}
       <div class="row">
         <div class="col-md-1" style="border: 1px solid #000; background-color: gray; height: 90px;"><i class="fa fa-box fa-5x" style="color:#1D43CF;"></i></div>
@@ -61,7 +61,7 @@
         <div class="col-md-1" style="border: 1px solid #000; background-color: gray; height: 90px;" ><i class="fa fa-cart-arrow-down fa-5x" style="color:#26F054;"></i></div>
         <div class="col-md-1" style="border: 1px solid #000; background-color: gray; height: 90px;" ><br><h4 align="left" style="color:cornsilk">Compras</h4></div>
         <div class="col-md-3" style="border: 1px solid #000; background-color: white;"><h3 style="color: black;">Precio sugerido</h3>{{ form.precio }}</div>
-        <div class="col-md-3" style="border: 1px solid #000; background-color: white;"></div>
+        <div class="col-md-3" style="border: 1px solid #000; background-color: white;"><h3 style="color: black;">Subir imagen</h3>{{ form.imagen }}</div>
 
         <div class="col-md-4" style="border: 1px solid #000; background-color: white;"></div>
       </div>

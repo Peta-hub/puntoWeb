@@ -74,8 +74,8 @@
        <!--Quintas filas-->
 
       <div class="row">
-        <div class="col-md-1" style="border: 1px solid #000; background-color: gray; height: 400px;" ><i class="fa fa-users fa-5x" style="color:#35C6AC;"></i></div>
-          <div class="col-md-1" style="border: 1px solid #000; background-color: gray; height: 400px;" ><br><a href="{% url 'proveedores' %}"><h6 align="left" style="color:cornsilk">Proveedores</h6></a></div>
+        <div class="col-md-1" style="border: 1px solid #000; background-color: gray; height: 800px;" ><i class="fa fa-users fa-5x" style="color:#35C6AC;"></i></div>
+          <div class="col-md-1" style="border: 1px solid #000; background-color: gray; height: 800px;" ><br><a href="{% url 'proveedores' %}"><h6 align="left" style="color:cornsilk">Proveedores</h6></a></div>
         <div class="col-md-10" style="border: 1px solid #000; background-color: white; ">
             {% if productos  %}
                 <table class="table">
@@ -95,11 +95,12 @@
                     <td>{{ producto.categoria }}</td>
                     <td>{{ producto.precio }}</td>
                 <td>
-                </td>
-            </tr>
-            {% endfor %}
-            </tbody>
-        </table>
+                 </td>
+                </tr>
+               </tbody>
+                </table>
+               <div align="right"></div><img src="{{ producto.imagen.url }}" width="800" height="500" alt="" align=""></div>
+               {% endfor %}
         {% else%}
             <h1>No existe el producto buscasdo</h1>
             <h1></h1>

@@ -74,7 +74,7 @@ def cambiar_contrasena(request, pk=0):
 
 def adminPrincipalProductos(request):
     if request.method == "POST":
-        producto_form = ProductoForm(request.POST)
+        producto_form = ProductoForm(request.POST, files=request.FILES)
         print(request.POST)
         if producto_form.is_valid():
             producto_form.save()
@@ -107,7 +107,7 @@ def editarProducto(request,pk=""):  # se editara un cliente desde una url, esta 
         if request.method == "GET":
             producto_form = ProductoForm(instance=producto)  # creamos un formulario y lo renderizamos , decimos que la instancia que utilizara es el Autor que busco el usuario por eso se pone la variable de arriba
         else:
-            producto_form = ProductoForm(request.POST,instance=producto)
+            producto_form = ProductoForm(request.POST,instance=producto, files=request.FILES)
             if producto_form.is_valid():
                 producto_form.save()
             return redirect("adminMain")
