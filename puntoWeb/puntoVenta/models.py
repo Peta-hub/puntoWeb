@@ -55,7 +55,7 @@ class Compras(models.Model):
     cantidad = models.IntegerField("Cantidad: ", blank=True, null=False, default="")
     precio = models.FloatField("Precio: ",blank=True, null=False, default=0)
     fecha_compra = models.DateTimeField(auto_now_add=True)
-    material = models.OneToOneField(Materiales, on_delete=models.CASCADE)
+    material = models.ForeignKey(Materiales, on_delete=models.CASCADE)
     proveedor = models.OneToOneField(Proveedores, on_delete=models.CASCADE)
 
 
