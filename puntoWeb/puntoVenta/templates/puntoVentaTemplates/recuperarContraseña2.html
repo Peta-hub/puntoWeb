@@ -46,7 +46,11 @@
        <i class="fas fa-sign-in-alt " style="color:#3043AD";></i> Confirmar
        </button>
          </div>
-
+         {% if errores %}
+            <h4 align="center" style="color: red"> {{ errores }} </h4>
+        {% else %}
+           <div id="form_error" class="col-sm-offset-1 col-sm-5"></div>
+        {% endif %}
         </div>
     </main>
     </form>

@@ -56,10 +56,15 @@ def recuperarContraseña2(request, pk=0):
     if request.method == 'POST':
         usuario = User.objects.get(id=pk)
         respuesta = request.POST.get("respuesta")
-        pregunta = Recuperar.objects.get(respuesta=respuesta)
-        if pregunta.user.username == usuario.username:
-            user_form = UserForm(instance=usuario)
-            return render(request,"puntoVentaTemplates/cambiarContraseña.html",{"form":user_form,"usuario":usuario})
+        if Recuperar.objects.filter(respuesta=respuesta).exists():
+           pregunta = Recuperar.objects.get(respuesta=respuesta)
+           if pregunta.user.username == usuario.username:
+               user_form = UserForm(instance=usuario)
+               return render(request,"puntoVentaTemplates/cambiarContraseña.html",{"form":user_form,"usuario":usuario})
+        else:
+            print("el usuario cayo aqui")
+            question = Recuperar.objects.get(user=usuario)
+            return render(request, 'puntoVentaTemplates/recuperarContraseña2.html',{"form": RecuperarForm, "errores": "Respuesta invalida.","usuario":usuario, "pregunta":question})
     return render(request, "puntoVentaTemplates/recuperarContraseña2.html", {"form": RecuperarForm})
 
 

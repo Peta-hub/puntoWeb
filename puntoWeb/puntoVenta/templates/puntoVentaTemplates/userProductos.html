@@ -74,10 +74,11 @@
        <!--Quintas filas-->
 
       <div class="row">
-        <div class="col-md-1" style="border: 1px solid #000; background-color: gray; height: 800px;" ><i class="fa fa-users fa-5x" style="color:#35C6AC;"></i></div>
-          <div class="col-md-1" style="border: 1px solid #000; background-color: gray; height: 800px;" ><br><a href="{% url 'proveedores' %}"><h6 align="left" style="color:cornsilk">Proveedores</h6></a></div>
-        <div class="col-md-10" style="border: 1px solid #000; background-color: white; ">
+        <div class="col-md-1" style="border: 1px solid #000; background-color: gray; height: 1500px;" ><i class="fa fa-users fa-5x" style="color:#35C6AC;"></i></div>
+          <div class="col-md-1" style="border: 1px solid #000; background-color: gray; height: 1500px;" ><br><a href="{% url 'proveedores' %}"><h6 align="left" style="color:cornsilk">Proveedores</h6></a></div>
+        <div class="col-md-10" style="border: 1px solid #000; background-color: white;">
             {% if productos  %}
+                {% for producto in productos %}
                 <table class="table">
                     <thead>
                     <tr>
@@ -85,25 +86,27 @@
                         <th>Nombre</th>
                         <th>Categoria</th>
                         <th>Precio</td>
+                        <th style="text-align: right">Imagen del producto disponible para venta</td>
                     </tr>
                 </thead>
                 <tbody>
-                {% for producto in productos %}
                 <tr>
                     <td>{{ producto.codigo }}</td>
                     <td>{{ producto.nombre }}</td>
                     <td>{{ producto.categoria }}</td>
                     <td>{{ producto.precio }}</td>
+                    {% if producto.imagen %}
+                    <td><img src="{{ producto.imagen.url }}" width="600" height="350" alt="" align="right"></td>
+                    {% else %}
+                    <td><h2 align="right" style="color:red">No hay imagen subida</h2></td>
+                    {% endif %}
                 <td>
                  </td>
                 </tr>
                </tbody>
                 </table>
-                   {% if producto.imagen %}
-                      <div align="right"></div><img src="{{ producto.imagen.url }}" width="800" height="500" alt="" align=""></div>
-                   {% endif %}
                {% endfor %}
-        {% else%}
+        {% else %}
             <h1>No existe el producto buscasdo</h1>
             <h1></h1>
         {% endif %}</div>
@@ -111,11 +114,6 @@
 
 
       <!-- Ultima fila  -->
-
-      <div class="row">
-        <div class="col-md-2" style="border: 1px solid #000; background-color: gray; height: 100px;" ></div>
-        <div class="col-md-10" style="border: 1px solid #000; background-color: white;"></div>
-      </div>
 
 
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>

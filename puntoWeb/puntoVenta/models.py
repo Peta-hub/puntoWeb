@@ -13,16 +13,16 @@ class Recuperar(models.Model):
 
 class Clientes(models.Model):
     id = models.CharField("Identificador", primary_key=True, max_length=4, blank=False, null=False, default="")
-    nombre = models.CharField("Nombre cliente", max_length=16, blank=True, null=False, default="")
-    apellidos = models.CharField("Apellidos cliente", max_length=16, blank=True, null=False, default="")
-    direccion = models.CharField("Direccion cliente", max_length=16, blank=True, null=False, default="")
+    nombre = models.CharField("Nombre cliente", max_length=20, blank=True, null=False, default="")
+    apellidos = models.CharField("Apellidos cliente", max_length=35, blank=True, null=False, default="")
+    direccion = models.CharField("Direccion cliente", max_length=40, blank=True, null=False, default="")
     telefono = models.CharField("Telefono cliente", max_length=16, blank=True, null=False, default="")
 
 
 class Productos(models.Model):
     codigo = models.CharField("Identificador", primary_key=True, max_length=4, blank=True, null=False, default="")
-    nombre = models.CharField("Nombre producto", max_length=20, blank=True, null=False, default="")
-    categoria = models.CharField("Categoria", max_length=20, blank=True, null=False, default="")
+    nombre = models.CharField("Nombre producto", max_length=30, blank=True, null=False, default="")
+    categoria = models.CharField("Categoria", max_length=30, blank=True, null=False, default="")
     precio = models.IntegerField("Precio sugerido", blank=True, null=False, default="")
     imagen = models.ImageField(null=True, blank=True)
 
@@ -32,7 +32,7 @@ class Productos(models.Model):
 
 class Proveedores(models.Model):
     id_Proveedor = models.CharField("Identificador", primary_key=True, max_length=4, blank=True, null=False, default="")
-    nombre = models.CharField("Nombre producto", max_length=25, blank=True, null=False, default="")
+    nombre = models.CharField("Nombre producto", max_length=35, blank=True, null=False, default="")
     direccion = models.CharField("Direccion proveedor", max_length=30, blank=True, null=False, default="")
     telefono = models.CharField("Telefono proveedor", max_length=16, blank=True, null=False, default="")
 
