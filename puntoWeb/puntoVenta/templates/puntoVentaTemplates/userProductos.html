@@ -99,7 +99,9 @@
                 </tr>
                </tbody>
                 </table>
-               <div align="right"></div><img src="{{ producto.imagen.url }}" width="800" height="500" alt="" align=""></div>
+                   {% if producto.imagen %}
+                      <div align="right"></div><img src="{{ producto.imagen.url }}" width="800" height="500" alt="" align=""></div>
+                   {% endif %}
                {% endfor %}
         {% else%}
             <h1>No existe el producto buscasdo</h1>

@@ -42,9 +42,13 @@ def login(request):
 def recuperarContraseña(request):
     if request.method == 'POST':
         nomuser = request.POST.get("username")
-        usuario = User.objects.get(username=nomuser)
-        pregunta = Recuperar.objects.get(user=usuario)
-        return render(request, "puntoVentaTemplates/recuperarContraseña2.html",{"pregunta":pregunta,"usuario":usuario,"form":RecuperarForm})
+        if User.objects.filter(username=nomuser).exists():
+            usuario = User.objects.get(username=nomuser)
+            pregunta = Recuperar.objects.get(user=usuario)
+            return render(request, "puntoVentaTemplates/recuperarContraseña2.html",{"pregunta":pregunta,"usuario":usuario,"form":RecuperarForm})
+        else:
+            print("el usuario cayo aqui")
+            return render(request, 'puntoVentaTemplates/recuperarContraseña.html',{"form": FormularioLogin, "errores": "Usuario inválido."})
     return render(request, "puntoVentaTemplates/recuperarContraseña.html", {"form": FormularioLogin})
 
 
@@ -74,7 +78,7 @@ def cambiar_contrasena(request, pk=0):
 
 def adminPrincipalProductos(request):
     if request.method == "POST":
-        producto_form = ProductoForm(request.POST, files=request.FILES)
+        producto_form = ProductoForm(request.POST, files=request.FILES)  #files es para poder subir imagenes
         print(request.POST)
         if producto_form.is_valid():
             producto_form.save()
