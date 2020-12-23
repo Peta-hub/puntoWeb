@@ -6,7 +6,7 @@ from django.urls import reverse_lazy
 from django.views.generic import ListView, UpdateView, CreateView, DeleteView
 from puntoVenta.forms import FormularioLogin, MaterialForm, VentaForm, DetalleForm
 from puntoVenta.forms import ClienteForm, ProductoForm, ProveedorForm, RecuperarForm
-from django.contrib.auth import authenticate, login as do_login
+from django.contrib.auth import authenticate, login as do_login, logout as do_logout
 from django.db.models import Sum
 
 # Create your views here.
@@ -31,6 +31,7 @@ def login(request):
                 except Exception:
                     return render(request, 'puntoVentaTemplates/login.html',{"form": FormularioLogin, "errores": "Error al iniciar sesión"})
             else:
+                do_login(request, user)
                 return redirect('clientes')
         else:
             print("el usuario cayo aqui")
@@ -38,6 +39,10 @@ def login(request):
     elif request.method == "GET":
         return render(request, "puntoVentaTemplates/login.html", {"form": FormularioLogin})
 
+
+def logout(request):
+    do_logout(request)
+    return redirect('login')
 
 def recuperarContraseña(request):
     if request.method == 'POST':

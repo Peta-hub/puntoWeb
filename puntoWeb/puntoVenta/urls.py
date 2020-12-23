@@ -5,6 +5,7 @@ from puntoVenta import views
 urlpatterns = [
 
     path('login/',views.login, name="login"),
+    path('logout/',views.logout, name="logout"),
     path('Recuperar/',views.recuperarContraseña, name="recuperar"),
     path('Confirmar/<int:pk>/',views.recuperarContraseña2, name="recuperar2"),
     path('reset_password/<int:pk>/', views.cambiar_contrasena, name="cambiar"),
