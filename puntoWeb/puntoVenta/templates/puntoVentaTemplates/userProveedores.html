@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -11,7 +12,7 @@
     <!--FONT AWESOME-->
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.1/css/all.css" integrity="sha384-vp86vTRFVJgpjF9jiIGPEEqYqlDwgyBgEF109VFjmqGmIY/Y4HV4d3Gp2irVfcrp" crossorigin="anonymous">
     <!--CUSTOM CSS-->
-    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="{% static 'css/usersEstilos.css' %}">
 
 </head>
 <body>
@@ -21,20 +22,21 @@
    <div class="container-fluid"> <!--Cointainer fluid usa toda la pantalla para las regillas-->
 
         <div class="row">
-            <div class="col-md-2" style="border: 1px solid #000; background-color: gray; height: 40px;" ></div>
-            <div class="col-md-3" style="border: 1px solid #000; background-color: blue; height: 40px;"></div>
-            <div class="col-md-4" style="border: 1px solid #000; background-color: blue; height: 40px;"><i class="fas fa-user fa-2x" style="color:#2BEE1B;">Bienvenido {{ user.username }}</i></div>
-            <div class="col-md-3" style="border: 1px solid #000; background-color: blue; height: 40px;"><a class="btn btn-danger" href="{% url 'logout' %}">Cerrar Sesion</a></div>
+            <div class="col-md-2" id="superior"></div>
+            <div class="col-md-3" id="superior-2"></div>
+            <div class="col-md-3" id="superior-2"><i class="fas fa-user fa-2x" id="img-compras">Bienvenido {{ user.username }}</i></div>
+            <div class="col-md-2" id="superior-2"><h4 id="letras">¿Que desea hacer?</h4></div>
+            <div class="col-md-2 text-right" id="superior-2"><a class="btn btn-danger " href="{% url 'logout' %}"><i class="fas fa-sign-in-alt fa-1x" ></i>Logout</a></div>
           </div>
 
     <!--primeras filas -->
 
     <div class="row">
-        <div class="col-md-1" style="border: 1px solid #000; background-color: gray; height: 90px;"><i class="fa fa-users fa-5x" style="color:#35C6AC;"></i></div>
-        <div class="col-md-1" style="border: 1px solid #000; background-color: gray; height: 90px;"><br><a href="{% url 'clientes' %}"><h4 align="left" style="color:cornsilk">Clientes</h4></a></div>
+        <div class="col-md-1" id="filas"><i class="fa fa-users fa-5x" id="img-cliente"></i></div>
+        <div class="col-md-1" id="filas"><br><a href="{% url 'clientes' %}"><h4 align="left" id="letras">Clientes</h4></a></div>
 
-        <div class="col-md-1" style="background-color: white; border: 1px solid #000;"><i class="fa fa-users fa-5x" style="color:#35C6AC;"></i></div>
-        <div class="col-md-9" style="background-color: white; border: 1px solid #000;"><h1>Proveedores</h1></div>
+        <div class="col-md-1" id="filas-2"><i class="fa fa-users fa-5x" id="img-proveedores"></i></div>
+        <div class="col-md-9" id="filas-2"><h1>Proveedores</h1></div>
       </div>
 
 
@@ -43,40 +45,55 @@
        <form method="POST" action="{% url 'proveedores' %}">
            {% csrf_token %}
       <div class="row">
-        <div class="col-md-1" style="border: 1px solid #000; background-color: gray; height: 90px;"><i class="fa fa-box fa-5x" style="color:#1D43CF;"></i></div>
-          <div class="col-md-1" style="border: 1px solid #000; background-color: gray; height: 90px;" ><br><a href="{% url 'productos' %}"><h5 align="left" style="color:cornsilk">Productos</h5></a></div>
-        <div class="col-md-3" style="border: 1px solid #000; background-color: white;"><h3 style="color: black;">Id Proveedor</h3>{{ form.id_Proveedor }}</div>
-        <div class="col-md-3" style="border: 1px solid #000; background-color: white;"><h3 style="color: black;">Nombre</h3>{{ form.nombre }}</div>
-        <div class="col-md-4" style="border: 1px solid #000; background-color: white;"><h3 style="color: black;">Dirección</h3>{{ form.direccion }}</div>
+        <div class="col-md-1" id="filas"><i class="fa fa-box fa-5x" id="img-productos"></i></div>
+          <div class="col-md-1" id="filas" ><br><a href="{% url 'productos' %}"><h5 align="left" id="letras">Productos</h5></a></div>
+        <div class="col-md-3" id="filas-2"><h3 id="letras-negro">Id Proveedor</h3>{{ form.id_Proveedor }}</div>
+        <div class="col-md-3" id="filas-2"><h3 id="letras-negro">Nombre</h3>{{ form.nombre }}</div>
+        <div class="col-md-4" id="filas-2"><h3 id="letras-negro">Dirección</h3>{{ form.direccion }}</div>
       </div>
 
       <!--Terceras filas-->
 
       <div class="row">
-        <div class="col-md-1" style="border: 1px solid #000; background-color: gray; height: 90px;" ><i class="fa fa-cart-arrow-down fa-5x" style="color:#26F054;"></i></div>
-          <div class="col-md-1" style="border: 1px solid #000; background-color: gray; height: 90px;" ><br><a href="{% url 'compras' %}"><h4 align="left" style="color:cornsilk">Compras</h4></a></div>
-        <div class="col-md-3" style="border: 1px solid #000; background-color: white;"><h3 style="color: black;">Teléfono</h3>{{ form.telefono }}</div>
-        <div class="col-md-3" style="border: 1px solid #000; background-color: white;"></div>
+        <div class="col-md-1" id="filas"><i class="fa fa-cart-arrow-down fa-5x" id="img-compras"></i></div>
+          <div class="col-md-1" id="filas" ><br><a href="{% url 'compras' %}"><h4 align="left" id="letras">Compras</h4></a></div>
+        <div class="col-md-3" id="filas-2"><h3 id="letras-negro">Teléfono</h3>{{ form.telefono }}</div>
+        <div class="col-md-3" id="filas-2"></div>
 
-        <div class="col-md-4" style="border: 1px solid #000; background-color: white;"></div>
+        <div class="col-md-4" id="filas-2"></div>
       </div>
       <!--Cuartas filas-->
 
       <div class="row">
-        <div class="col-md-1" style="border: 1px solid #000; background-color: gray; height: 90px;" ><i class="fa fa-hand-holding-usd fa-5x" style="color:#E55DE1;"></i></div>
-          <div class="col-md-1" style="border: 1px solid #000; background-color: gray; height: 90px;" ><br><a href="{% url 'ventas' %}"><h4 align="left" style="color:cornsilk">Ventas</h4></a></div>
-        <div class="col-md-3" style="border: 1px solid #000; background-color: white;"><button type="submit" class="btn btn-success btn-lg btn-block">Crear</button></div>
+        <div class="col-md-1" id="filas"><i class="fa fa-hand-holding-usd fa-5x" id="img-ventas"></i></div>
+          <div class="col-md-1" id="filas"><br><a href="{% url 'ventas' %}"><h4 align="left" id="letras">Ventas</h4></a></div>
+        <div class="col-md-3" id="filas-2"><button type="submit" class="btn btn-success btn-lg btn-block">Crear</button></div>
         </form>
-        <div class="col-md-7" style="border: 1px solid #000; background-color: white;"></div>
+        <div class="col-md-7" id="filas-2"></div>
       </div>
 
 
        <!--Quintas filas-->
 
+     <div class="row">
+        <div class="col-md-1" id="filas"><i class="fa fa-users fa-5x" id="img-proveedores"></i></div>
+          <div class="col-md-1" id="filas"><br><a href="{% url 'proveedores' %}"><h6 align="left" id="letras">Proveedores</h6></a></div>
+          <div class="col-md-10" id="filas-2"><h1>Listado de proveedores</h1></div>
+      </div>
+
+      <!-- Ultima fila  -->
+
       <div class="row">
-        <div class="col-md-1" style="border: 1px solid #000; background-color: gray; height: 800px;" ><i class="fa fa-users fa-5x" style="color:#35C6AC;"></i></div>
-          <div class="col-md-1" style="border: 1px solid #000; background-color: gray; height: 800px;" ><br><a href="{% url 'proveedores' %}"><h6 align="left" style="color:cornsilk">Proveedores</h6></a></div>
-        <div class="col-md-10" style="border: 1px solid #000; background-color: white; ">
+
+        {% if request.user.is_superuser %}
+        <div class="col-md-2 text-center" id="ultima"><i class="fa fa-address-book fa-6x" id="img-admin" ></i><a href="{% url 'adminMain' %}"><h3 class="text-center" id="letras-negro">Administración</h3></a>
+            <i class="far fa-chart-bar fa-6x" id="img-reporte"></i><a href="{% url 'adminReportes' %}"><h3 class="text-center" id="letras-negro">Reportes</h3></a>
+        </div>
+            {% else%}
+         <div class="col-md-2 text-center" id="ultima" ></div>
+            {% endif %}
+
+        <div class="col-md-10" >
             {% if proveedores  %}
                 <table class="table">
                     <thead>
@@ -109,7 +126,7 @@
       </div>
 
 
-      <!-- Ultima fila  -->
+
 
       <div class="row">
         <div class="col-md-2" style="border: 1px solid #000; background-color: gray; height: 100px;" ></div>

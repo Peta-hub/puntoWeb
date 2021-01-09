@@ -1,0 +1,49 @@
+#superior{
+  background-color: gray;
+}
+#superior-2{
+  background-color: blue;
+    height: 40px;
+}
+#filas{
+  background-color: gray;
+    height: 90px;
+}
+#filas-2{
+  background-color: white;
+    height: 90px;
+}
+#ultima{
+  background-color: gray;
+    height: 1000px;
+}
+#letras{
+  color:cornsilk;
+}
+#letras-negro{
+  color:black;
+}
+#letras-rojo{
+  color:red;
+}
+#img-cliente{
+  color:#35C6AC;
+}
+#img-productos{
+  color:#1D43CF;
+}
+#img-compras{
+  color:#26F054;
+}
+#img-ventas{
+  color:#E55DE1;
+}
+#img-proveedores{
+  color:#35C6AC;
+}
+#img-admin{
+  color:#4FD21F;
+}
+#img-reporte{
+  color:#0FB5B0;
+}

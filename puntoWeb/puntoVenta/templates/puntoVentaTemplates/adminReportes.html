@@ -24,8 +24,9 @@
         <div class="row">
             <div class="col-md-2" style="border: 1px solid #000; background-color: gray; height: 40px;" ></div>
             <div class="col-md-3" style="border: 1px solid #000; background-color: blue; height: 40px;"></div>
-            <div class="col-md-4" style="border: 1px solid #000; background-color: blue; height: 40px;"><i class="fas fa-user fa-2x" style="color:#2BEE1B;">Bienvenido {{ user.username }}</i></div>
-            <div class="col-md-3" style="border: 1px solid #000; background-color: blue; height: 40px;"><a class="btn btn-danger" href="{% url 'logout' %}">Cerrar Sesion</a></div>
+            <div class="col-md-3" style="border: 1px solid #000; background-color: blue; height: 40px;"><i class="fas fa-user fa-2x" style="color:#2BEE1B;">Bienvenido {{ user.username }}</i></div>
+            <div class="col-md-2" style="border: 1px solid #000; background-color: blue; height: 40px;"><h4 style="color:cornsilk">¿Que desea hacer?</h4></div>
+            <div class="col-md-2 text-right" style="border: 1px solid #000; background-color: blue; height: 40px;"><a class="btn btn-danger " href="{% url 'logout' %}"><i class="fas fa-sign-in-alt fa-1x" style="color:#3043AD";></i>Logout</a></div>
           </div>
 
     <!--primeras filas -->
@@ -51,30 +52,30 @@
       <!--Terceras filas-->
 
       <div class="row">
-        <div class="col-md-1" style="border: 1px solid #000; background-color: gray; height: 90px;" ><i class="fa fa-cart-arrow-down fa-5x" style="color:#26F054;"></i></div>
-        <div class="col-md-1" style="border: 1px solid #000; background-color: gray; height: 90px;" ><br><h4 align="left" style="color:cornsilk">Compras</h4></div>
-        <div class="col-md-3" style="border: 1px solid #000; background-color: white; height: 90px;" ><br></div>
-        <div class="col-md-1" style="border: 1px solid #000; background-color: white; height: 90px;" ><br><a href="{% url 'reportesCompras' %}" class="boton_usuario" ><h4>Compras</h4></a></div>
-        <div class="col-md-1" style="border: 1px solid #000; background-color: white; height: 90px;" ><br></div>
-          <div class="col-md-2" style="border: 1px solid #000; background-color: white; height: 90px;" ><br><a href="{% url 'adminUsuarios' %}" class="boton_2" ><h4>Ventas</h4></a></div>
+        <div class="col-md-1" style="background-color: gray; height: 90px;" ><i class="fa fa-cart-arrow-down fa-5x" style="color:#26F054;"></i></div>
+        <div class="col-md-1" style="background-color: gray; height: 90px;" ><br><h4 align="left" style="color:cornsilk">Compras</h4></div>
+        <div class="col-md-3" style="background-color: white; height: 90px;" ><br></div>
+        <div class="col-md-1" style="background-color: white; height: 90px;" ><br><a href="{% url 'reportesCompras' %}" class="boton_usuario" ><h4>Compras</h4></a></div>
+        <div class="col-md-1" style="background-color: white; height: 90px;" ><br></div>
+          <div class="col-md-2" style="background-color: white; height: 90px;" ><br><a href="{% url 'reportesVentas' %}" class="boton_2" ><h4>Ventas</h4></a></div>
       </div>
       <!--Cuartas filas-->
 
       <div class="row">
-        <div class="col-md-1" style="border: 1px solid #000; background-color: gray; height: 90px;" ><i class="fa fa-hand-holding-usd fa-5x" style="color:#E55DE1;"></i></div>
-        <div class="col-md-1" style="border: 1px solid #000; background-color: gray; height: 90px;" ><br><h4 align="left" style="color:cornsilk">Ventas</h4></div>
+        <div class="col-md-1" style="background-color: gray; height: 90px;" ><i class="fa fa-hand-holding-usd fa-5x" style="color:#E55DE1;"></i></div>
+        <div class="col-md-1" style="background-color: gray; height: 90px;" ><br><h4 align="left" style="color:cornsilk">Ventas</h4></div>
       </div>
 
 
        <!--Quintas filas-->
 
       <div class="row">
-        <div class="col-md-1" style="border: 1px solid #000; background-color: gray; height: 85px;" ><i class="fa fa-users fa-5x" style="color:#35C6AC;"></i></div>
-        <div class="col-md-1" style="border: 1px solid #000; background-color: gray; height: 85px;" ><br><h6 align="left" style="color:cornsilk">Proveedores</h6></div>
-        <div class="col-md-2" style="border: 1px solid #000; background-color: white; height: 85px;" ><br></div>
-        <div class="col-md-2" style="border: 1px solid #000; background-color: white; height: 85px;" ><i class="fa fa-cart-arrow-down fa-7x" style="color:#26F054; "></i></div>
-        <div class="col-md-2" style="border: 1px solid #000; background-color: white; height: 85px;" ><br></div>
-        <div class="col-md-1" style="border: 1px solid #000; background-color: white; height: 85px;" ><i class="fa fa-hand-holding-usd fa-6x" style="color:#E55DE1;"></i></div>
+        <div class="col-md-1" style="background-color: gray; height: 85px;" ><i class="fa fa-users fa-5x" style="color:#35C6AC;"></i></div>
+        <div class="col-md-1" style="background-color: gray; height: 85px;" ><br><h6 align="left" style="color:cornsilk">Proveedores</h6></div>
+        <div class="col-md-2" style="background-color: white; height: 85px;" ><br></div>
+        <div class="col-md-2" style="background-color: white; height: 85px;" ><i class="fa fa-cart-arrow-down fa-7x" style="color:#26F054; "></i></div>
+        <div class="col-md-2" style="background-color: white; height: 85px;" ><br></div>
+        <div class="col-md-1" style="background-color: white; height: 85px;" ><i class="fa fa-hand-holding-usd fa-6x" style="color:#E55DE1;"></i></div>
       </div>
 
 
@@ -82,7 +83,7 @@
       <!-- Ultima fila  -->
 
       <div class="row">
-        <div class="col-md-2 text-center" style="border: 1px solid #000; background-color: gray; height: 800px;" ><i class="fa fa-address-book fa-6x" style="color:#4FD21F" ></i><a href="{% url 'adminMain' %}"><h3 class="text-center" style="color: black">Administracion</h3></a>
+        <div class="col-md-2 text-center" style="background-color: gray; height: 800px;" ><i class="fa fa-address-book fa-6x" style="color:#4FD21F" ></i><a href="{% url 'adminMain' %}"><h3 class="text-center" style="color: black">Administracion</h3></a>
             <i class="far fa-chart-bar fa-6x" style="color:#0FB5B0"></i><h3 class="text-center">Reportes</h3>
         </div>
       </div>

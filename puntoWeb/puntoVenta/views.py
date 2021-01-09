@@ -2,16 +2,14 @@ from django.contrib.auth import authenticate
 from django.contrib.auth.models import User
 from django.core.exceptions import ObjectDoesNotExist
 from django.shortcuts import render, HttpResponse, redirect
-from django.urls import reverse_lazy
 from django.views.generic import ListView, UpdateView, CreateView, DeleteView
 from puntoVenta.forms import FormularioLogin, MaterialForm, VentaForm, DetalleForm
 from puntoVenta.forms import ClienteForm, ProductoForm, ProveedorForm, RecuperarForm
 from django.contrib.auth import authenticate, login as do_login, logout as do_logout
 from django.db.models import Sum
-
 # Create your views here.
 from puntoVenta.models import Clientes, Productos, Proveedores, Recuperar, Materiales, Ventas, Detalles
-
+from . import decorators
 from puntoVenta.forms import UserForm
 
 from puntoVenta.forms import CompraForm
@@ -85,7 +83,7 @@ def cambiar_contrasena(request, pk=0):
             print("error")
 
 
-
+@decorators.no_admin
 def adminPrincipalProductos(request):
     if request.method == "POST":
         producto_form = ProductoForm(request.POST, files=request.FILES)  #files es para poder subir imagenes
@@ -98,6 +96,7 @@ def adminPrincipalProductos(request):
         productos = Productos.objects.all()
     return render(request, "puntoVentaTemplates/adminPrincipalProductos.html", {"form": producto_form, "productos": productos})
 
+@decorators.no_es_admin
 def eliminar_producto(request,pk=""):  # se eliminara un objeto de la bd ESTA FUNCION NO DEVUELVE NINGUNA PAGINA SOLO ELIMINA AL AUTOR Y REDIRIJE A LA PAGINA QUE LOS LISTA PARA QUE YA NO APAREZCA
     producto_form = None
     error = None
@@ -113,6 +112,7 @@ def eliminar_producto(request,pk=""):  # se eliminara un objeto de la bd ESTA FU
         error = e
     return render(request, 'puntoVentaTemplates/eliminar_adminProductos.html', {'form': producto_form, 'error': error, "iduser": pk, 'producto': producto})
 
+@decorators.no_es_admin
 def editarProducto(request,pk=""):  # se editara un cliente desde una url, esta funcion recibe el id de un cliente para editarlo
     producto_form = None
     error = None
@@ -132,7 +132,7 @@ def editarProducto(request,pk=""):  # se editara un cliente desde una url, esta 
 
 
 
-
+@decorators.no_admin
 def adminDetallesProducto(request):
     if request.method == "POST":
         detalles_form = DetalleForm(request.POST)
@@ -144,7 +144,7 @@ def adminDetallesProducto(request):
         detalles = Detalles.objects.all()
     return render(request, "puntoVentaTemplates/adminDetallesProducto.html", {"form": detalles_form, "detalles": detalles})
 
-
+@decorators.no_es_admin
 def eliminar_detalle(request,pk=""):  # se eliminara un objeto de la bd ESTA FUNCION NO DEVUELVE NINGUNA PAGINA SOLO ELIMINA AL AUTOR Y REDIRIJE A LA PAGINA QUE LOS LISTA PARA QUE YA NO APAREZCA
     detalles_form = None
     error = None
@@ -160,7 +160,7 @@ def eliminar_detalle(request,pk=""):  # se eliminara un objeto de la bd ESTA FUN
         error = e
     return render(request, 'puntoVentaTemplates/eliminar_adminDetalles.html', {'form': detalles_form, 'error': error, "iduser": pk, 'detalle': detalle})
 
-
+@decorators.no_es_admin
 def editarDetalle(request,pk=""):  # se editara un cliente desde una url, esta funcion recibe el id de un cliente para editarlo
     detalles_form = None
     error = None
@@ -182,7 +182,7 @@ def editarDetalle(request,pk=""):  # se editara un cliente desde una url, esta f
 
 
 
-
+@decorators.no_admin
 def adminMateriales(request):
     if request.method == "POST":
         material_form = MaterialForm(request.POST)
@@ -196,6 +196,7 @@ def adminMateriales(request):
     return render(request, "puntoVentaTemplates/adminMateriales.html",{"form": material_form, "materiales": materiales})
 
 
+@decorators.no_es_admin
 def eliminar_material(request,pk=""):  # se eliminara un objeto de la bd ESTA FUNCION NO DEVUELVE NINGUNA PAGINA SOLO ELIMINA AL AUTOR Y REDIRIJE A LA PAGINA QUE LOS LISTA PARA QUE YA NO APAREZCA
     material_form = None
     error = None
@@ -211,6 +212,7 @@ def eliminar_material(request,pk=""):  # se eliminara un objeto de la bd ESTA FU
         error = e
     return render(request, 'puntoVentaTemplates/eliminar_adminMateriales.html', {'form': material_form, 'error': error, "iduser": pk, 'material': material})
 
+@decorators.no_es_admin
 def editarMaterial(request,pk=""):  # se editara un cliente desde una url, esta funcion recibe el id de un cliente para editarlo
     material_form = None
     error = None
@@ -230,7 +232,7 @@ def editarMaterial(request,pk=""):  # se editara un cliente desde una url, esta 
 
 
 
-
+@decorators.no_admin
 def adminUsuarios(request):
     if request.method == "POST":
         form = UserForm(request.POST)
@@ -250,6 +252,7 @@ def adminUsuarios(request):
         contexto = {"form":form,"recuperar_form":recuperar_form,"usuarios":preguntas}
         return render(request,"puntoVentaTemplates/adminUsuarios.html",contexto)
 
+@decorators.no_es_admin
 def eliminar_usuario(request,pk=""):  # se eliminara un objeto de la bd ESTA FUNCION NO DEVUELVE NINGUNA PAGINA SOLO ELIMINA AL AUTOR Y REDIRIJE A LA PAGINA QUE LOS LISTA PARA QUE YA NO APAREZCA
     user_form = None
     error = None
@@ -265,6 +268,7 @@ def eliminar_usuario(request,pk=""):  # se eliminara un objeto de la bd ESTA FUN
         error = e
     return render(request, 'puntoVentaTemplates/eliminar_adminUsuarios.html', {'form': user_form, 'error': error, "iduser": pk, 'usuario': usuario})
 
+@decorators.no_es_admin
 def editarUsuario(request,pk=""):  # se editara un cliente desde una url, esta funcion recibe el id de un cliente para editarlo
     usuario = User.objects.get(id=pk)
     if request.method == 'POST':
@@ -284,16 +288,18 @@ def editarUsuario(request,pk=""):  # se editara un cliente desde una url, esta f
 
 
 
-
+@decorators.no_admin
 def adminReportes(request):
     return render(request, "puntoVentaTemplates/adminReportes.html")
 
+@decorators.no_admin
 def adminReportesCompras(request):
     compras_form = CompraForm()
     compras = Compras.objects.all()
     suma = Compras.objects.all().aggregate(Sum('precio'))
     return render(request, "puntoVentaTemplates/adminReportesCompras.html", {"form": compras_form, "compras": compras,"total": suma})
 
+@decorators.no_admin
 def adminReportesVentas(request):
     ventas_form = VentaForm()
     ventas = Ventas.objects.all()
