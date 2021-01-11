@@ -31,31 +31,36 @@ class UserForm(forms.ModelForm):
             'username': forms.TextInput(
                 attrs={
                     'class': 'form-control',
-                    'id': 'usr'
+                    'id': 'usr',
+                    'required': True
                 }
             ),
             'password': forms.PasswordInput(
                 attrs={
                     'class': 'form-control',
-                    'id': 'pwd'
+                    'id': 'pwd',
+                    'required': True
                 }
             ),
             'first_name': forms.TextInput(
                 attrs={
                     'class': 'form-control',
-                    'id': 'nombres'
+                    'id': 'nombres',
+                    'required': True
                 }
             ),
             'last_name': forms.TextInput(
                 attrs={
                     'class': 'form-control',
-                    'id': 'apellidos'
+                    'id': 'apellidos',
+                    'required': True
                 }
             ),
             'email': forms.TextInput(
                 attrs={
                     'class': 'form-control',
-                    'id': 'apellidos'
+                    'id': 'apellidos',
+                    'required': True
                 }
             ),
         }
@@ -86,7 +91,8 @@ class RecuperarForm(forms.ModelForm):
                     'class': 'form-control',
                     'id': 'pregunta_secreta',
                     'style': 'background-color: #FEFCAE',
-                    'size': '10'
+                    'size': '10',
+                    'required': True
                 }
             ),
             'respuesta': forms.TextInput(
@@ -94,7 +100,8 @@ class RecuperarForm(forms.ModelForm):
                     'class': 'form-control',
                     'id': 'respuesta',
                     'style': 'background-color: #FEFCAE',
-                    'size': '10'
+                    'size': '10',
+                    'required': True
                 }
             ),
         }
