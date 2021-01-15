@@ -8,7 +8,6 @@
     <!--FONT AWESOME-->
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.1/css/all.css" integrity="sha384-vp86vTRFVJgpjF9jiIGPEEqYqlDwgyBgEF109VFjmqGmIY/Y4HV4d3Gp2irVfcrp" crossorigin="anonymous">
     <!--CUSTOM CSS-->
-    <link rel="stylesheet" href="css/main.css">
     <link rel="stylesheet" href="{% static 'css/login.css' %}">
 </head>
 
@@ -27,14 +26,14 @@
 <form  action="{% url 'login' %}"  method="POST">
  {% csrf_token %}
 <table><tr><td>
-<i class="fas fa-user fa-3x input-group-text" style="color:#EB8110;"></i></td><td>  <!--mb-3 se ocupa para q haya una separacion entre los elementos-->
+<i class="fas fa-user fa-3x input-group-text" id="sign"></i></td><td>  <!--mb-3 se ocupa para q haya una separacion entre los elementos-->
     {{ form.username }} <!--placeholder poner texto transparente dentro de un cuadro-->
 </td></tr>
 
 
 
 <tr><td>
-    <i class="fas fa-lock fa-3x input-group-text" style="color:#EB8110;"></i></td><td>  <!--mb-3 se ocupa para q haya una separacion entre los elementos-->
+    <i class="fas fa-lock fa-3x input-group-text" id="sign"></i></td><td>  <!--mb-3 se ocupa para q haya una separacion entre los elementos-->
     {{ form.password }}  <!--placeholder poner texto transparente dentro de un cuadro-->
 </td></tr>
  <tr><td>
@@ -45,10 +44,10 @@
 </button>
 
 </table>
-<a href="{% url 'recuperar' %}"><h6 align="center" style="color:black">¿Olvidó su contraseña?</h6></a>
+<a href="{% url 'recuperar' %}"><h6 align="center" id="black">¿Olvidó su contraseña?</h6></a>
 <div class="form-group">
         {% if errores %}
-            <h4 align="center" style="color: red"> {{ errores }} </h4>
+            <h4 align="center" style="color: red" id="rojo"> {{ errores }} </h4>
         {% else %}
            <div id="form_error" class="col-sm-offset-1 col-sm-5"></div>
         {% endif %}
