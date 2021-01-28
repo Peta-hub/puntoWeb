@@ -442,7 +442,6 @@ class VentaForm(forms.ModelForm):
                     'id': 'precio',
                     'style': 'background-color: #FEFCAE',
                     'size': '4',
-                    'required': True
                 }
             ),
             'producto': forms.Select(
@@ -465,7 +464,6 @@ class VentaForm(forms.ModelForm):
                     'id': 'paga',
                     'style': 'background-color: #FEFCAE',
                     'size': '4',
-                    'required': True
                 }
             ),
         }
