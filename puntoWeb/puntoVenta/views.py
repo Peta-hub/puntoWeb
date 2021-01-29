@@ -2,6 +2,7 @@ from django.contrib.auth import authenticate
 from django.contrib.auth.models import User
 from django.core.exceptions import ObjectDoesNotExist
 from django.shortcuts import render, HttpResponse, redirect
+from django.utils.functional import empty
 from django.views.generic import ListView, UpdateView, CreateView, DeleteView
 from puntoVenta.forms import FormularioLogin, MaterialForm, VentaForm, DetalleForm
 from puntoVenta.forms import ClienteForm, ProductoForm, ProveedorForm, RecuperarForm
@@ -239,7 +240,7 @@ def adminUsuarios(request):
         recuperar_form = RecuperarForm(request.POST)
         if form.is_valid() and recuperar_form.is_valid():
             user = form.save()
-            recuperar = recuperar_form.save(commit=False)
+            recuperar = recuperar_form.save(commit=False) #hacer modificacion antes de salvar
             recuperar.user = user
             recuperar.save()
             return redirect("adminUsuarios")
@@ -422,18 +423,48 @@ def editarCompra(request,pk=""):  # se editara un cliente desde una url, esta fu
     return render(request, 'puntoVentaTemplates/actualizar_userCompras.html', {'form': compras_form,'error': error, "id_Compra":pk})
 
 
-
+#El campo se manda a llamar con el nombre que tiene en la base de datos
 
 def userVentas(request):
     if request.method == "POST":
         ventas_form = VentaForm(request.POST)
-        if ventas_form.is_valid():
-            ventas_form.save()
-        return redirect("ventas")
+        print(request.POST)
+        if request.POST.get("paga"):
+            print("no aqui")
+            if ventas_form.is_valid():
+                paga = request.POST.get("paga")
+                print(paga)
+                venta = ventas_form.save(commit=False)
+                precio_total = request.session.get('precio_total', False)
+                cambio = int(paga) - int(precio_total)
+                venta.precio = precio_total
+                venta.cambio = cambio
+                print(venta)
+                print(precio_total)
+                venta.save()
+            return redirect("ventas")
+        else:
+            cantidad = 0
+            print("aqui")
+            id_producto = request.POST.get("producto")
+            print(id_producto)
+            cantidad = request.POST.get("cantidad")
+
+            product = Productos.objects.get(codigo=id_producto)
+            precio_producto = product.precio
+            print(type(precio_producto))
+            print(type(cantidad))
+            precio_total = int(cantidad) * precio_producto
+            print(precio_total)
+            request.session['precio_total'] = precio_total
+            flag = True
+            ventas = Ventas.objects.all()
+            return render(request, "puntoVentaTemplates/userVentas.html", {"form": ventas_form, "total": precio_total, "flag": flag, "ventas": ventas})
     else:  # si es get, es decir cuando solo se entra a la pagina
         ventas_form = VentaForm()
         ventas = Ventas.objects.all()
-    return render(request, "puntoVentaTemplates/userVentas.html", {"form": ventas_form, "ventas": ventas})
+        flag = False
+    return render(request, "puntoVentaTemplates/userVentas.html", {"form": ventas_form, "ventas": ventas, "flag": flag})
 
 
 def eliminar_venta(request,pk=""):  # se eliminara un objeto de la bd ESTA FUNCION NO DEVUELVE NINGUNA PAGINA SOLO ELIMINA AL AUTOR Y REDIRIJE A LA PAGINA QUE LOS LISTA PARA QUE YA NO APAREZCA

@@ -57,8 +57,15 @@
       <div class="row">
         <div class="col-md-1" id="filas" ><i class="fa fa-cart-arrow-down fa-5x" id="img-compras"></i></div>
           <div class="col-md-1" id="filas"><br><a href="{% url 'compras' %}"><h4 align="left" id="letras">Compras</h4></a></div>
-        <div class="col-md-3" id="filas-2"><h3 id="letras-negro">Precio</h3>{{ form.precio }}</div>
-        <div class="col-md-3" id="filas-2"><h3 id="letras-negro">Paga con</h3>{{ form.paga }}</div>
+        <div class="col-md-3" id="filas-2"><h3 id="letras-negro">Precio</h3>
+             {% if flag  %}
+              {{ total }}
+            {% endif %}</div>
+
+        <div class="col-md-3" id="filas-2"><h3 id="letras-negro">Paga con</h3>
+            {% if flag  %}
+            {{ form.paga }}
+             {% endif %}</div>
 
         <div class="col-md-4" id="filas-2"></div>
       </div>
@@ -67,7 +74,11 @@
       <div class="row">
         <div class="col-md-1" id="filas"><i class="fa fa-hand-holding-usd fa-5x" id="img-ventas"></i></div>
           <div class="col-md-1" id="filas"><br><a href="{% url 'ventas' %}"><h4 align="left" id="letras">Ventas</h4></a></div>
-        <div class="col-md-3" id="filas-2"><button type="submit" class="btn btn-success btn-lg btn-block">Total</button></div>
+          {% if flag  %}
+        <div class="col-md-3" id="filas-2"><button type="submit" class="btn btn-success btn-lg btn-block">Pagar</button></div>
+          {% else%}
+          <div class="col-md-3" id="filas-2"><button type="submit" class="btn btn-success btn-lg btn-block">Total</button></div>
+          {% endif %}
         </form>
         <div class="col-md-7" id="filas-2"></div>
       </div>
@@ -108,19 +119,21 @@
                 </thead>
                 <tbody>
                 {% for venta in ventas %}
-               <tr>
-                    <td>{{ venta.id }}</td>
-                    <td>{{ venta.producto }}</td>
-                    <td>{{ venta.cantidad }}</td>
-                    <td>{{ venta.precio }}</td>
-                    <td>{{ venta.paga }}</td>
-                    <td>{{ venta.cambio }}</td>
-                <td>
-                <a href="{% url 'actualizar_venta' venta.id %}" class="btn btn-primary">Editar</a>
-                <a href="{% url 'eliminar_venta' venta.id %}" class="btn btn-danger">Eliminar</a>
-                </td>
-            </tr>
-            {% endfor %}
+                   {% if venta.paga  %}
+                <tr>
+                     <td>{{ venta.id }}</td>
+                     <td>{{ venta.producto }}</td>
+                     <td>{{ venta.cantidad }}</td>
+                     <td>{{ venta.precio }}</td>
+                     <td>{{ venta.paga }}</td>
+                     <td>{{ venta.cambio }}</td>
+                  <td>
+                  <a href="{% url 'actualizar_venta' venta.id %}" class="btn btn-primary">Editar</a>
+                  <a href="{% url 'eliminar_venta' venta.id %}" class="btn btn-danger">Eliminar</a>
+                  </td>
+                </tr>
+                   {% endif %}
+                {% endfor %}
             </tbody>
         </table>
         {% else%}

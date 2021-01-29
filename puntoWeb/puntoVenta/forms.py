@@ -431,6 +431,7 @@ class VentaForm(forms.ModelForm):
                 attrs={
                     'class': 'form-control',
                     'id': 'cantidad',
+                    'name': 'cantidad',
                     'style': 'background-color: #FEFCAE',
                     'size': '2',
                     'required': True
@@ -440,6 +441,7 @@ class VentaForm(forms.ModelForm):
                 attrs={
                     'class': 'form-control',
                     'id': 'precio',
+                    'name': 'precio',
                     'style': 'background-color: #FEFCAE',
                     'size': '4',
                 }
@@ -447,6 +449,7 @@ class VentaForm(forms.ModelForm):
             'producto': forms.Select(
                 attrs={
                     'class': 'form-control',
+                    'name': 'id_producto',
                 }
             ),
             'cambio': forms.TextInput(
@@ -462,22 +465,24 @@ class VentaForm(forms.ModelForm):
                 attrs={
                     'class': 'form-control',
                     'id': 'paga',
+                    'name': 'paga',
                     'style': 'background-color: #FEFCAE',
                     'size': '4',
                 }
             ),
         }
 
-    def save(self, commit=True):
-        venta = super().save(commit=False)
+    #def save(self, commit=True):
+        #venta = super().save(commit=False)
 
-        valor = (self.cleaned_data['precio'])
-        pagar = (self.cleaned_data['paga'])
+        #valor = (self.cleaned_data['precio'])
+        #pagar = (self.cleaned_data['paga'])
 
+        #print("valor: ", valor)
+        #print("pagar: ", pagar)
+        #cambio = float(pagar) - float(valor)
 
-        cambio = float(pagar) - float(valor)
-
-        venta.cambio = cambio
-        if commit:
-            venta.save()
-        return venta
+        #venta.cambio = cambio
+        #if commit:
+           # venta.save()
+        #return venta

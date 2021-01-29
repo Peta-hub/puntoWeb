@@ -63,9 +63,9 @@ class Ventas(models.Model):
     id = models.AutoField("Identificador", primary_key=True, blank=False, null=False)
     producto = models.ForeignKey(Productos, on_delete=models.CASCADE)
     cantidad = models.IntegerField("Cantidad: ", blank=True, null=False, default="")
-    paga = models.FloatField("Paga: ", blank=True, null=False, default=0)
-    precio = models.FloatField("Precio: ", blank=True, null=False, default=0)
-    cambio = models.FloatField("Cambio: ", blank=True, null=False, default=0)
+    paga = models.FloatField("Paga: ", blank=True, null=True, default=0)
+    precio = models.FloatField("Precio: ", blank=True, null=True, default=0)
+    cambio = models.FloatField("Cambio: ", blank=True, null=True, default=0)
     fecha_compra = models.DateTimeField(auto_now_add=True)
 
 
