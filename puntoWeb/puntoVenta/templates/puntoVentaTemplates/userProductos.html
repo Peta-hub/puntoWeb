@@ -104,7 +104,7 @@
                         <th>Nombre</th>
                         <th>Categoria</th>
                         <th>Precio</td>
-                        <th style="text-align: right">Imagen del producto disponible para venta</td>
+                        <th>Imagen Disponible</td>
                     </tr>
                 </thead>
                 <tbody>
@@ -115,7 +115,7 @@
                     <td>{{ producto.categoria }}</td>
                     <td>{{ producto.precio }}</td>
                     {% if producto.imagen %}
-                    <td><img src="{{ producto.imagen.url }}" width="610" height="360" alt="" align="right"></td>
+                    <td><a href="{{ producto.imagen.url }}">Ver la imagen</a></td>
                     {% else %}
                     <td><h2 align="right" id="letras-rojo">No hay imagen subida</h2></td>
                     {% endif %}

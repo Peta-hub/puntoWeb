@@ -472,7 +472,7 @@ class VentaForm(forms.ModelForm):
             ),
         }
 
-    #def save(self, commit=True):
+    #def save(self, commit=True):  #con esta funcion la funcion .save resta 2 campos de la base de datos y crea un nuevo compo que se guardara junto con los demas
         #venta = super().save(commit=False)
 
         #valor = (self.cleaned_data['precio'])
