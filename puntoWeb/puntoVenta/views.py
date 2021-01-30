@@ -436,8 +436,9 @@ def userVentas(request):
                 print(paga)
                 venta = ventas_form.save(commit=False)
                 precio_total = request.session.get('precio_total', False)
+                cantidad = request.session.get('cantidad', False)
                 cambio = int(paga) - int(precio_total)
-                venta.precio = precio_total
+                venta.precio = precio_total #Aqui se guarda algo individualmente en la bd
                 venta.cambio = cambio
                 print(venta)
                 print(precio_total)
@@ -451,15 +452,18 @@ def userVentas(request):
             cantidad = request.POST.get("cantidad")
 
             product = Productos.objects.get(codigo=id_producto)
+            nombre = product.nombre
             precio_producto = product.precio
             print(type(precio_producto))
             print(type(cantidad))
             precio_total = int(cantidad) * precio_producto
             print(precio_total)
+            request.session['id_producto'] = id_producto
             request.session['precio_total'] = precio_total
+            request.session['cantidad'] = cantidad
             flag = True
             ventas = Ventas.objects.all()
-            return render(request, "puntoVentaTemplates/userVentas.html", {"form": ventas_form, "total": precio_total, "flag": flag, "ventas": ventas})
+            return render(request, "puntoVentaTemplates/userVentas.html", {"form": ventas_form, "total": precio_total, "flag": flag, "ventas": ventas, "cantidad": cantidad, "nombre": nombre})
     else:  # si es get, es decir cuando solo se entra a la pagina
         ventas_form = VentaForm()
         ventas = Ventas.objects.all()

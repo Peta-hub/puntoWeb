@@ -94,7 +94,7 @@
          <div class="col-md-2 text-center" id="ultima" ></div>
             {% endif %}
 
-        <div class="col-md-10" >
+        <div class="col-md-9" >
             {% if productos  %}
                 {% for producto in productos %}
                 <table class="table">
@@ -104,7 +104,7 @@
                         <th>Nombre</th>
                         <th>Categoria</th>
                         <th>Precio</td>
-                        <th>Imagen Disponible</td>
+                        <th style="text-align: center">Imagen del producto disponible para venta</td>
                     </tr>
                 </thead>
                 <tbody>
@@ -112,12 +112,12 @@
                 <tr>
                     <td>{{ producto.codigo }}</td>
                     <td>{{ producto.nombre }}</td>
-                    <td>{{ producto.categoria }}</td>
+                    <td >{{ producto.categoria }}</td>
                     <td>{{ producto.precio }}</td>
                     {% if producto.imagen %}
-                    <td><a href="{{ producto.imagen.url }}">Ver la imagen</a></td>
+                    <td><a href="{{ producto.imagen.url }}" style="text-align: center;display: inline-block;width: 100%;"><img src="{{ producto.imagen.url }}" alt="Los Tejos" id="img" /></a></td>
                     {% else %}
-                    <td><h2 align="right" id="letras-rojo">No hay imagen subida</h2></td>
+                    <td><h3 align="center" id="letras-rojo">No hay imagen subida</h3></td>
                     {% endif %}
                 <td>
                  </td>

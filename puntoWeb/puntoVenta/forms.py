@@ -427,7 +427,7 @@ class VentaForm(forms.ModelForm):
             'proveedor': 'Proveedor: ',
         }
         widgets = {
-            'cantidad': forms.TextInput(
+            'cantidad': forms.NumberInput(
                 attrs={
                     'class': 'form-control',
                     'id': 'cantidad',
@@ -461,7 +461,7 @@ class VentaForm(forms.ModelForm):
                     'required': True
                 }
             ),
-            'paga': forms.TextInput(
+            'paga': forms.NumberInput(
                 attrs={
                     'class': 'form-control',
                     'id': 'paga',
