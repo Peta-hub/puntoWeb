@@ -437,7 +437,12 @@ def userVentas(request):
                 venta = ventas_form.save(commit=False)
                 precio_total = request.session.get('precio_total', False)
                 cantidad = request.session.get('cantidad', False)
+                nombre = request.session.get('nombre', False)
                 cambio = int(paga) - int(precio_total)
+                if cambio < 0:
+                    ventas = Ventas.objects.all()
+                    flag = True
+                    return render(request, "puntoVentaTemplates/userVentas.html",{"form": ventas_form, "total": precio_total, "flag": flag, "ventas": ventas,"cantidad": cantidad, "nombre": nombre, "error": "*Por favor introduzca un numero mayor"})
                 venta.precio = precio_total #Aqui se guarda algo individualmente en la bd
                 venta.cambio = cambio
                 print(venta)
@@ -459,6 +464,7 @@ def userVentas(request):
             precio_total = int(cantidad) * precio_producto
             print(precio_total)
             request.session['id_producto'] = id_producto
+            request.session['nombre'] = nombre
             request.session['precio_total'] = precio_total
             request.session['cantidad'] = cantidad
             flag = True
