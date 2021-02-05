@@ -91,7 +91,11 @@ def adminPrincipalProductos(request):
         print(request.POST)
         if producto_form.is_valid():
             producto_form.save()
-        return redirect("adminMain")
+            return redirect("adminMain")
+        else:
+            producto_form = ProductoForm()
+            productos = Productos.objects.all()
+            return render(request, "puntoVentaTemplates/adminPrincipalProductos.html",{"form": producto_form, "productos": productos, "error": "*Porfavor introduzca un id diferente"})
     else:  # si es get, es decir cuando solo se entra a la pagina
         producto_form = ProductoForm()
         productos = Productos.objects.all()
@@ -139,7 +143,11 @@ def adminDetallesProducto(request):
         detalles_form = DetalleForm(request.POST)
         if detalles_form.is_valid():
             detalles_form.save()
-        return redirect("adminDetaProducto")
+            return redirect("adminDetaProducto")
+        else:
+            detalles_form = DetalleForm()
+            detalles = Detalles.objects.all()
+            return render(request, "puntoVentaTemplates/adminDetallesProducto.html",{"form": detalles_form, "detalles": detalles, "error": "*Porfavor introduzca un id diferente"})
     else:  # si es get, es decir cuando solo se entra a la pagina
         detalles_form = DetalleForm()
         detalles = Detalles.objects.all()
@@ -190,7 +198,11 @@ def adminMateriales(request):
         print(request.POST)
         if material_form.is_valid():
             material_form.save()
-        return redirect("adminMateriales")
+            return redirect("adminMateriales")
+        else:
+            material_form = MaterialForm()
+            materiales = Materiales.objects.all()
+            return render(request, "puntoVentaTemplates/adminMateriales.html",{"form": material_form, "materiales": materiales, "error": "*Porfavor introduzca un id diferente"})
     else:  # si es get, es decir cuando solo se entra a la pagina
         material_form = MaterialForm()
         materiales = Materiales.objects.all()
@@ -316,7 +328,11 @@ def userClientes(request):
         print(request.POST)
         if cliente_form.is_valid():
             cliente_form.save()
-        return redirect("clientes")
+            return redirect("clientes")
+        else:
+            cliente_form = ClienteForm()
+            clientes = Clientes.objects.all()
+            return render(request, "puntoVentaTemplates/userClientes.html", {"form": cliente_form, "clientes": clientes, "error": "*Porfavor introduzca un id diferente"})
     else: # si es get, es decir cuando solo se entra a la pagina
         cliente_form = ClienteForm()
         clientes = Clientes.objects.all()
@@ -521,7 +537,11 @@ def userProveedores(request):
         print(request.POST)
         if proveedor_form.is_valid():
             proveedor_form.save()
-        return redirect("proveedores")
+            return redirect("proveedores")
+        else:
+            proveedor_form = ProveedorForm()
+            proveedores = Proveedores.objects.all()
+            return render(request, "puntoVentaTemplates/userProveedores.html",{"form": proveedor_form, "proveedores": proveedores, "error": "*Porfavor introduzca un id diferente"})
     else:  # si es get, es decir cuando solo se entra a la pagina
         proveedor_form = ProveedorForm()
         proveedores = Proveedores.objects.all()

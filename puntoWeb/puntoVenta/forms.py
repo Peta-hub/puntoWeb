@@ -157,7 +157,7 @@ class ClienteForm(forms.ModelForm):
                     'required': True
                 }
             ),
-            'telefono': forms.TextInput(
+            'telefono': forms.NumberInput(
                 attrs={
                     'class': 'form-control',
                     'id': 'telefono',
@@ -209,7 +209,7 @@ class ProveedorForm(forms.ModelForm):
                     'required': True
                 }
             ),
-            'telefono': forms.TextInput(
+            'telefono': forms.NumberInput(
                 attrs={
                     'class': 'form-control',
                     'id': 'telefono',
@@ -263,7 +263,7 @@ class ProductoForm(forms.ModelForm):
                     'required': True
                 }
             ),
-            'precio': forms.TextInput(
+            'precio': forms.NumberInput(
                 attrs={
                     'class': 'form-control',
                     'id': 'direccion',
@@ -315,7 +315,7 @@ class MaterialForm(forms.ModelForm):
                     'required': True
                 }
             ),
-            'precio': forms.TextInput(
+            'precio': forms.NumberInput(
                 attrs={
                     'class': 'form-control',
                     'id': 'direccion',
@@ -359,7 +359,7 @@ class DetalleForm(forms.ModelForm):
                     'class': 'form-control',
                 }
             ),
-            'cantidad': forms.TextInput(
+            'cantidad': forms.NumberInput(
                 attrs={
                     'class': 'form-control',
                     'id': 'cantidad',
@@ -384,7 +384,7 @@ class CompraForm(forms.ModelForm):
             'proveedor': 'Proveedor: ',
         }
         widgets = {
-            'cantidad': forms.TextInput(
+            'cantidad': forms.NumberInput(
                 attrs={
                     'class': 'form-control',
                     'id': 'cantidad',
@@ -393,7 +393,7 @@ class CompraForm(forms.ModelForm):
                     'required': True
                 }
             ),
-            'precio': forms.TextInput(
+            'precio': forms.NumberInput(
                 attrs={
                     'class': 'form-control',
                     'id': 'precio',
