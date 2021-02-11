@@ -269,6 +269,8 @@ class ProductoForm(forms.ModelForm):
                     'id': 'direccion',
                     'style': 'background-color: #FEFCAE',
                     'size': '20',
+                    'min': '1',
+                    'pattern': "^[0-9]+",
                     'required': True
                 }
             ),
@@ -321,6 +323,8 @@ class MaterialForm(forms.ModelForm):
                     'id': 'direccion',
                     'style': 'background-color: #FEFCAE',
                     'size': '20',
+                    'min': '1',
+                    'pattern': "^[0-9]+",
                     'required': True
                 }
             ),
@@ -365,6 +369,8 @@ class DetalleForm(forms.ModelForm):
                     'id': 'cantidad',
                     'style': 'background-color: #FEFCAE',
                     'size': '20',
+                    'min': '1',
+                    'pattern': "^[0-9]+",
                     'required': True
                 }
             ),
@@ -390,6 +396,8 @@ class CompraForm(forms.ModelForm):
                     'id': 'cantidad',
                     'style': 'background-color: #FEFCAE',
                     'size': '2',
+                    'min': '1',
+                    'pattern': "^[0-9]+",
                     'required': True
                 }
             ),
@@ -399,7 +407,6 @@ class CompraForm(forms.ModelForm):
                     'id': 'precio',
                     'style': 'background-color: #FEFCAE',
                     'size': '2',
-                    'required': True
                 }
             ),
             'material': forms.Select(
@@ -413,6 +420,7 @@ class CompraForm(forms.ModelForm):
                 }
             ),
         }
+
 
 
 
@@ -434,6 +442,8 @@ class VentaForm(forms.ModelForm):
                     'name': 'cantidad',
                     'style': 'background-color: #FEFCAE',
                     'size': '2',
+                    'min': '1',
+                    'pattern': "^[0-9]+",
                     'required': True
                 }
             ),
@@ -468,6 +478,7 @@ class VentaForm(forms.ModelForm):
                     'name': 'paga',
                     'style': 'background-color: #FEFCAE',
                     'size': '4',
+                    'required': True
                 }
             ),
         }

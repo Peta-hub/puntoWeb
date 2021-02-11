@@ -395,9 +395,20 @@ def userProductos(request):
 def userCompras(request):
     if request.method == "POST":
         compras_form = CompraForm(request.POST)
+        id_material = request.POST.get("material")
+        cantidad = request.POST.get("cantidad")
+        material = Materiales.objects.get(id_Material=id_material)
+        precio_material = material.precio
         if compras_form.is_valid():
-            compras_form.save()
-        return redirect("compras")
+            compra = compras_form.save(commit=False)
+            total = float(precio_material) * float(cantidad)
+            compra.precio = total
+            compra.save()
+            return redirect("compras")
+        else:
+            compras_form = CompraForm()
+            compras = Compras.objects.all()
+            return render(request, "puntoVentaTemplates/userCompras.html", {"form": compras_form, "compras": compras, "error": "*Porfavor elija otro proveedor"})
     else:  # si es get, es decir cuando solo se entra a la pagina
         compras_form = CompraForm()
         compras = Compras.objects.all()
@@ -431,7 +442,15 @@ def editarCompra(request,pk=""):  # se editara un cliente desde una url, esta fu
             compras_form = CompraForm(instance=compra)  # creamos un formulario y lo renderizamos , decimos que la instancia que utilizara es el Autor que busco el usuario por eso se pone la variable de arriba
         else:
             compras_form = CompraForm(request.POST,instance=compra)
+            id_material = request.POST.get("material")
+            cantidad = request.POST.get("cantidad")
+            material = Materiales.objects.get(id_Material=id_material)
+            precio_material = material.precio
             if compras_form.is_valid():
+                compra = compras_form.save(commit=False)
+                total = float(precio_material) * float(cantidad)
+                compra.precio = total
+                compra.save()
                 compras_form.save()
             return redirect("compras")
     except ObjectDoesNotExist as e:
@@ -518,14 +537,54 @@ def editarVenta(request,pk=""):  # se editara un cliente desde una url, esta fun
         venta = Ventas.objects.get(id=pk)  # SON LAS MISMAS CONSULTAS QUE HACEMOS EN SHELL
         if request.method == "GET":
             ventas_form = VentaForm(instance=venta)  # creamos un formulario y lo renderizamos , decimos que la instancia que utilizara es el Autor que busco el usuario por eso se pone la variable de arriba
+            flag = False
         else:
             ventas_form = VentaForm(request.POST,instance=venta)
-            if ventas_form.is_valid():
-                ventas_form.save()
-            return redirect("ventas")
+            print(request.POST)
+            if request.POST.get("paga"):
+                print("no aqui")
+                if ventas_form.is_valid():
+                    paga = request.POST.get("paga")
+                    print(paga)
+                    venta = ventas_form.save(commit=False)
+                    precio_total = request.session.get('precio_total', False)
+                    cantidad = request.session.get('cantidad', False)
+                    nombre = request.session.get('nombre', False)
+                    cambio = int(paga) - int(precio_total)
+                    if cambio < 0:
+                        ventas = Ventas.objects.all()
+                        flag = True
+                        return render(request, "puntoVentaTemplates/actualizar_userVentas.html",{"form": ventas_form, "total": precio_total, "flag": flag, "ventas": ventas,  "cantidad": cantidad, "nombre": nombre, "error": "*Por favor introduzca un numero mayor", "id":pk})
+                    venta.precio = precio_total  # Aqui se guarda algo individualmente en la bd
+                    venta.cambio = cambio
+                    print(venta)
+                    print(precio_total)
+                    venta.save()
+                return redirect("ventas")
+            else:
+                cantidad = 0
+                print("aqui")
+                id_producto = request.POST.get("producto")
+                print(id_producto)
+                cantidad = request.POST.get("cantidad")
+
+                product = Productos.objects.get(codigo=id_producto)
+                nombre = product.nombre
+                precio_producto = product.precio
+                print(type(precio_producto))
+                print(type(cantidad))
+                precio_total = int(cantidad) * precio_producto
+                print(precio_total)
+                request.session['id_producto'] = id_producto
+                request.session['nombre'] = nombre
+                request.session['precio_total'] = precio_total
+                request.session['cantidad'] = cantidad
+                flag = True
+                ventas = Ventas.objects.all()
+                return render(request, "puntoVentaTemplates/actualizar_userVentas.html", {"form": ventas_form, "total": precio_total, "flag": flag, "ventas": ventas,"cantidad": cantidad, "nombre": nombre, "id":pk})
     except ObjectDoesNotExist as e:
         error = e
-    return render(request, 'puntoVentaTemplates/actualizar_userVentas.html', {'form': ventas_form,'error': error, "id":pk})
+    return render(request, 'puntoVentaTemplates/actualizar_userVentas.html', {'form': ventas_form,'error': error, "id":pk, "flag": flag})
 
 
 
